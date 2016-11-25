@@ -30,7 +30,7 @@ define(["jquery"], function($) {
     }();
 
     this.update = function() {
-      vykreslovac.pozadi(ctx);
+      vykreslovac.pozadi(ctx, rozmer);
     }
 
 
