@@ -7,9 +7,13 @@ define([], function () {
     var rozmer = rozmer;
     var id = id;
     var rozmerJednohoGridu = rozmer / sloupcuRadku;
+    var ctx;
 
     //vypočtení lokace hradu, výpočty jsou už upravené pro cyklus
     var zakladniSouradniceHradu = Math.round(sloupcuRadku / rozmerHraduStrana);
+
+    const lokaceHradu = zakladniSouradniceHradu * rozmerJednohoGridu;
+    const rozmerHradu = rozmerHraduStrana * rozmerJednohoGridu;
 
     //proměnné do cyklu
     var i;
@@ -34,13 +38,25 @@ define([], function () {
       }
     }
 
-    //vypsání lokace bran
-
+    //vypsání lokace spawnpointů
+    this.grid[Math.round(sloupcuRadku / 2) - 1][0] = "spawnpoint";
+    this.grid[Math.round(sloupcuRadku / 2)  - 1][sloupcuRadku - 1] = "spawnpoint";
+    this.grid[0][Math.round(sloupcuRadku / 2) - 1] = "spawnpoint";
+    this.grid[sloupcuRadku - 1][Math.round(sloupcuRadku / 2) - 1] = "spawnpoint";
 
 
 
 
     //gettery
+    this.getCtx = function() {
+      return ctx;
+    }
+    this.getSloupceRadky = function() {
+      return sloupcuRadku;
+    }
+    this.getGrid = function() {
+      return this.grid;
+    };
     this.getRozmer = function() {
       return rozmer;
     };
@@ -49,11 +65,16 @@ define([], function () {
     };
     this.getLokaceHradu = function() {
       //vrátí pole se souřadnicemi pro vykreslení
-      return zakladniSouradniceHradu * rozmerJednohoGridu;
+      return lokaceHradu;
     };
     this.getRozmerHradu = function() {
-      return rozmerHraduStrana * rozmerJednohoGridu;
+      return rozmerHradu;
     };
+
+    //settery
+    this.setCtx = function(context) {
+      ctx = context;
+    }
 
   }
 
