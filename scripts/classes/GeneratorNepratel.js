@@ -14,44 +14,23 @@ define([], function() {
     }
 
     var _vypocteniPocSmeru = function(trasa, i, j) {
-      if (trasa[j].x !== trasa[j - 1].x) {
-        if (trasa[j].x > trasa[j - 1].x) {
+        if (trasa[j].x !== trasa[j + 1].x) {
           objekt = new SmerObjekt(-1, 0);
           smer[i].push(objekt);
-          console.log(trasa[j].x - trasa[j - 1].x);
         }
         else {
-          objekt = new SmerObjekt(1, 0);
-          smer[i].push(objekt);
-          console.log("bla");
-          console.log(trasa[j - 1].x - trasa[j].x);
-        }
-      }
-      else {
-        if (trasa[j].y > trasa[j - 1].y) {
           objekt = new SmerObjekt(0, -1);
           smer[i].push(objekt);
-          console.log(trasa[j].y - trasa[j - 1].y);
-
         }
-        else {
-          objekt = new SmerObjekt(0, 1);
-          smer[i].push(objekt);
-          console.log(trasa[j - 1].y - trasa[j].y);
-        }
-      }
     };
 
 
     var _zkraceniTras = function(index) {
-      var i = index;
-      var predchoziSmer = "x";
-      for (i = trasa.length - 1 ; i > 0; i--) {
+      for (i = 0 ; i < smer.length; i++) {
         smer[i] = [];
-        for (j = trasa[i].length - 1; j > 0; j--) {
+        for (j = 0; j < trasa[i].length; j++) {
           _vypocteniPocSmeru(trasa[i], i, j);
         }
-
       }
     };
 
