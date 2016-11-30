@@ -1,4 +1,4 @@
-define(["jquery", "HerniPlocha", "ZakladniUdaje", "Vykreslovac", "Hrac", "UpdateCtrl", "GeneratorTrasy"], function($, HerniPlocha, ZakladniUdaje, Vykreslovac, Hrac, UpdateCtrl, GeneratorTrasy) {
+define(["jquery", "HerniPlocha", "ZakladniUdaje", "Vykreslovac", "Hrac", "UpdateCtrl", "GeneratorTrasy", "GeneratorNepratel", "Nepritel"], function($, HerniPlocha, ZakladniUdaje, Vykreslovac, Hrac, UpdateCtrl, GeneratorTrasy, GeneratorNepratel, Nepritel) {
   var controller = gamee.controller.requestController('FiveButtons', {enableKeyboard: true});
 
 
@@ -14,8 +14,10 @@ define(["jquery", "HerniPlocha", "ZakladniUdaje", "Vykreslovac", "Hrac", "Update
     generatorTrasy = new GeneratorTrasy(zakladniUdaje);
     herniPlocha = new HerniPlocha(zakladniUdaje, vykreslovac);
 
+    generatorNepratel = new GeneratorNepratel(zakladniUdaje);
     hrac = new Hrac(zakladniUdaje);
-    updateCtrl = new UpdateCtrl(herniPlocha, hrac);
+    hoho = new Nepritel(zakladniUdaje.getSpawnpoint()[1], "trasa", 1, 20, zakladniUdaje.getCtx(), vykreslovac);
+    updateCtrl = new UpdateCtrl(herniPlocha, hrac, hoho);
 
     controller.buttons.left.on('keydown', function() {
       hrac.getDelo()[2].vystrel(-1, 0);

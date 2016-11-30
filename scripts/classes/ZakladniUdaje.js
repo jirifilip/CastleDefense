@@ -21,6 +21,7 @@ define(["GeneratorTrasy"], function (GeneratorTrasy) {
 
     //trasa a cesta nepřátel
     var trasa;
+    var spawnpointy;
 
     this.vykreslovac = Vykreslovac;
 
@@ -66,14 +67,20 @@ define(["GeneratorTrasy"], function (GeneratorTrasy) {
     };
     this.getTrasa = function() {
       return trasa;
+    };
+    this.getSpawnpoint = function() {
+      return spawnpoint;
     }
 
     //settery
     this.setCtx = function(context) {
       ctx = context;
-    }
+    };
     this.setTrasa = function(tr) {
       trasa = tr;
+    };
+    this.setSpawnpoint = function(spwn) {
+      spawnpoint = spwn;
     }
 
 

@@ -6,24 +6,13 @@ define(["jquery"], function($) {
     var sloupcuRadku = ZakladniUdaje.getSloupceRadky();
     var rozmerJednohoGridu = rozmer / sloupcuRadku;
     var ctx;
-    var spawnpointy = [];
+    var spawnpoint = zakladniUdaje.getSpawnpoint();
     var grid = ZakladniUdaje.getGrid();
     var trasa = ZakladniUdaje.getTrasa();
 
     var $body;
 
     this.canvas;
-
-    var _zapisSpawnpoint = function() {
-      for (i = 0; i < sloupcuRadku; i++) {
-        for (j = 0; j < sloupcuRadku; j++) {
-          if (grid[i][j] == "spawnpoint") {
-            spawnpointy.push({"x": i * rozmerJednohoGridu, "y" : j * rozmerJednohoGridu});
-          }
-        }
-      }
-    }
-
 
     //vykreslí všechny trasy
     var _vykresliTrasu = function(trasa, ctx) {
@@ -53,7 +42,6 @@ define(["jquery"], function($) {
     var _init = function() {
       _cacheDom();
       _vytvor();
-      _zapisSpawnpoint();
     }();
 
     var _clear = function() {
@@ -73,11 +61,14 @@ define(["jquery"], function($) {
       _clear();
       vykreslovac.pozadi(ctx, rozmer);
       _vykresliTrasu(trasa, ctx);
+      for (i = 0; i < spawnpoint.length; i++) {
+        vykreslovac.nepritel(ctx, spawnpoint[i].x + rozmerJednohoGridu / 4, spawnpoint[i].y  + rozmerJednohoGridu / 4, rozmerJednohoGridu / 2, 1);
+      }
     }
 
 
     this.getSpawnpoint = function() {
-      return spawnpointy;
+      return spawnpoint;
     }
   }
 
