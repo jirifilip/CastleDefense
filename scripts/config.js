@@ -11,6 +11,7 @@ requirejs.config({
     Hrac: "classes/Hrac",
     HerniPlocha: "classes/HerniPlocha",
     GeneratorNepratel: "classes/GeneratorNepratel",
+    GeneratorTrasy: "classes/GeneratorTrasy",
 
     //kontrolery
     CollisionCtrl: "classes/controllers/CollisionCtrl",

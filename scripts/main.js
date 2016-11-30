@@ -10,7 +10,7 @@ define(["jquery", "HerniPlocha", "ZakladniUdaje", "Vykreslovac", "Hrac", "Update
 
 
     //zadání rozměrů a id canvas
-    zakladniUdaje = new ZakladniUdaje(320, "herniPlocha", vykreslovac);
+    zakladniUdaje = new ZakladniUdaje(480, "herniPlocha", vykreslovac);
     herniPlocha = new HerniPlocha(zakladniUdaje, vykreslovac);
 
     hrac = new Hrac(zakladniUdaje);
@@ -32,7 +32,5 @@ define(["jquery", "HerniPlocha", "ZakladniUdaje", "Vykreslovac", "Hrac", "Update
   });
 
 
-  controller.buttons.up.on('keydown' );
-  controller.buttons.down.on('keydown' );
   controller.buttons.A.on('keydown' );
 })

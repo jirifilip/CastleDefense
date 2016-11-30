@@ -1,8 +1,9 @@
 define(["Strela"], function(Strela) {
   function Delo(x, y, ctx, rozmer, Vykreslovac) {
     var nabito = true;
-    const MaxNabiti = 200 ;
-    var minNabiti = MaxNabiti;
+    const MaxNabiti = 100 ;
+    var aktNabiti = MaxNabiti;
+    var rozmer = rozmer;
     var rozsah = rozmer / 1.5;
     const velikostStrely = rozsah / 5;
     var vykreslovac = Vykreslovac;
@@ -16,14 +17,17 @@ define(["Strela"], function(Strela) {
 
     this.update = function() {
       if (!nabito) {
-        minNabiti++;
-        if (minNabiti >= MaxNabiti) {
+        aktNabiti++;
+        if (aktNabiti >= MaxNabiti) {
           nabito = true;
-          minNabiti = MaxNabiti;
+          aktNabiti = MaxNabiti;
         }
       }
+      ctx.beginPath();
       nabito? ctx.fillStyle = "blue" : ctx.fillStyle = "red";
-      ctx.fillRect(x, y, rozsah * minNabiti / MaxNabiti, rozsah/2);
+      //ctx.fillRect(x, y, rozsah * aktNabiti / MaxNabiti, rozsah/2);
+      ctx.arc(x, y, rozsah/4, 0, aktNabiti / MaxNabiti * 2 * Math.PI);
+      ctx.fill();
 
       for (i = 0; i < this.strely.length; i++) {
         this.strely[i].update();
@@ -35,7 +39,7 @@ define(["Strela"], function(Strela) {
         strela = new Strela (vykreslovac, ctx, velikostStrely, smerX, smerY, x, y);
         this.strely.push(strela);
         nabito = false;
-        minNabiti = 0;
+        aktNabiti = 0;
       }
 
     }

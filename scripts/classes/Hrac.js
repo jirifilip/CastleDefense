@@ -11,10 +11,14 @@ define(["Delo"], function(Delo) {
 
     var poziceDel = [];
 
+    //nahoře
     poziceDel[0] = {"x" : lokaceHradu + rozmerHradu / 3, "y" : lokaceHradu};
-    poziceDel[1] = {"x" : lokaceHradu + rozmerHradu / 3, "y" : lokaceHradu + rozmerHradu};
-    poziceDel[2] = {"x" : lokaceHradu, "y" : lokaceHradu + rozmerHradu / 2};
-    poziceDel[3] = {"x" : lokaceHradu + rozmerHradu, "y" : lokaceHradu + rozmerHradu / 2};
+    //dole
+    poziceDel[1] = {"x" : lokaceHradu + 2 * rozmerHradu / 3, "y" : lokaceHradu + rozmerHradu};
+    //vlevo
+    poziceDel[2] = {"x" : lokaceHradu, "y" : lokaceHradu + 2 * rozmerHradu / 3};
+    //vpravo
+    poziceDel[3] = {"x" : lokaceHradu + rozmerHradu, "y" : lokaceHradu + rozmerHradu / 3};
 
 
     for (i = 0; i < 4; i++) {

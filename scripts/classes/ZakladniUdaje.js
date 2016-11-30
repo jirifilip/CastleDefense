@@ -38,6 +38,13 @@ define([], function () {
       }
     }
 
+    //rozdělení na kvadranty a vypsání lokaceBran
+    var trasy = [
+      {
+      }
+    ];
+
+
     //vypsání lokace spawnpointů
     this.grid[Math.round(sloupcuRadku / 2) - 1][0] = "spawnpoint";
     this.grid[Math.round(sloupcuRadku / 2)  - 1][sloupcuRadku - 1] = "spawnpoint";

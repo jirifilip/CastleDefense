@@ -53,7 +53,7 @@ define(["jquery"], function($) {
 
     var _vykresliSpawnpoint = function() {
       for (i = 0; i < 4; i++) {
-        vykreslovac.nepritel(ctx, spawnpointy[i].x, spawnpointy[i].y, rozmerJednohoGridu / 2);
+        vykreslovac.nepritel(ctx, spawnpointy[i].x, spawnpointy[i].y, rozmerJednohoGridu / 2, 0);
       }
     }
 

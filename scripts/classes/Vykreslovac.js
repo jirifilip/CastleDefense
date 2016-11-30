@@ -2,7 +2,7 @@ define([], function() {
   function Vykreslovac() {
 
     var pozadi = new Image();
-    pozadi.src = "images/pozadi.jpg";
+    pozadi.src = "images/pozadi2.jpg";
 
     var hrad = new Image();
     hrad.src = "images/hrad2.jpg";
@@ -10,8 +10,16 @@ define([], function() {
     var strela = new Image();
     strela.src = "images/strela.jpg"
 
-    var nepritel = new Image();
-    nepritel.src = "images/nepritel.jpg"
+    //nahore dole vlevo vpravo
+    var nepritel = []
+    for (i = 0; i < 4; i++)
+      nepritel[i] = new Image();
+
+    nepritel[0].src = "images/nepritel_nahore.jpg";
+    nepritel[1].src = "images/nepritel_dole.jpg";
+    nepritel[2].src = "images/nepritel_vlevo.jpg";
+    nepritel[3].src = "images/nepritel_vpravo.jpg";
+
 
     this.pozadi = function(ctx, rozmer) {
       ctx.drawImage(pozadi, 0, 0, rozmer, rozmer);
@@ -22,8 +30,8 @@ define([], function() {
     this.strela = function(ctx, x, y, rozmer) {
       ctx.drawImage(strela, x, y, rozmer, rozmer);
     }
-    this.nepritel = function(ctx, x, y, rozmer) {
-      ctx.drawImage(nepritel, x, y, rozmer, rozmer);
+    this.nepritel = function(ctx, x, y, rozmer, ktery) {
+      ctx.drawImage(nepritel[ktery], x, y, rozmer, rozmer);
     }
 
   }
