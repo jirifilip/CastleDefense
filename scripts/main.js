@@ -1,4 +1,4 @@
-define(["jquery", "HerniPlocha", "ZakladniUdaje", "Vykreslovac", "Hrac", "UpdateCtrl"], function($, HerniPlocha, ZakladniUdaje, Vykreslovac, Hrac, UpdateCtrl) {
+define(["jquery", "HerniPlocha", "ZakladniUdaje", "Vykreslovac", "Hrac", "UpdateCtrl", "GeneratorTrasy"], function($, HerniPlocha, ZakladniUdaje, Vykreslovac, Hrac, UpdateCtrl, GeneratorTrasy) {
   var controller = gamee.controller.requestController('FiveButtons', {enableKeyboard: true});
 
 
@@ -11,6 +11,7 @@ define(["jquery", "HerniPlocha", "ZakladniUdaje", "Vykreslovac", "Hrac", "Update
 
     //zadání rozměrů a id canvas
     zakladniUdaje = new ZakladniUdaje(480, "herniPlocha", vykreslovac);
+    generatorTrasy = new GeneratorTrasy(zakladniUdaje);
     herniPlocha = new HerniPlocha(zakladniUdaje, vykreslovac);
 
     hrac = new Hrac(zakladniUdaje);

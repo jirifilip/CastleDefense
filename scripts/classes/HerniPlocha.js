@@ -8,6 +8,7 @@ define(["jquery"], function($) {
     var ctx;
     var spawnpointy = [];
     var grid = ZakladniUdaje.getGrid();
+    var trasa = ZakladniUdaje.getTrasa();
 
     var $body;
 
@@ -19,6 +20,16 @@ define(["jquery"], function($) {
           if (grid[i][j] == "spawnpoint") {
             spawnpointy.push({"x": i * rozmerJednohoGridu, "y" : j * rozmerJednohoGridu});
           }
+        }
+      }
+    }
+
+
+    //vykreslí všechny trasy
+    var _vykresliTrasu = function(trasa, ctx) {
+      for (i = 0; i < trasa.length; i++) {
+        for (j = 0; j < trasa[i].length; j++) {
+          vykreslovac.cesta(ctx, trasa[i][j].x, trasa[i][j].y, rozmerJednohoGridu)
         }
       }
     }
@@ -50,17 +61,18 @@ define(["jquery"], function($) {
     }
 
 
-
+    /*
     var _vykresliSpawnpoint = function() {
       for (i = 0; i < 4; i++) {
         vykreslovac.nepritel(ctx, spawnpointy[i].x, spawnpointy[i].y, rozmerJednohoGridu / 2, 0);
       }
     }
+    */
 
     this.update = function() {
       _clear();
       vykreslovac.pozadi(ctx, rozmer);
-      _vykresliSpawnpoint();
+      _vykresliTrasu(trasa, ctx);
     }
 
 

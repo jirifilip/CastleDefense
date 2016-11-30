@@ -1,4 +1,4 @@
-define([], function () {
+define(["GeneratorTrasy"], function (GeneratorTrasy) {
   function ZakladniUdaje(rozmer, id, Vykreslovac) {
     //musí být liché
     const sloupcuRadku = 11;
@@ -19,6 +19,9 @@ define([], function () {
     var i;
     var j;
 
+    //trasa a cesta nepřátel
+    var trasa;
+
     this.vykreslovac = Vykreslovac;
 
     this.grid = [];
@@ -27,7 +30,7 @@ define([], function () {
     for (i = 0; i < sloupcuRadku; i++) {
       this.grid[i] = [];
       for (j = 0; j < sloupcuRadku; j++) {
-        this.grid[i][j] = "prazdno";
+        this.grid[i][j] = "NIC";
       }
     }
 
@@ -37,22 +40,6 @@ define([], function () {
         this.grid[i][j] = "hrad";
       }
     }
-
-    //rozdělení na kvadranty a vypsání lokaceBran
-    var trasy = [
-      {
-      }
-    ];
-
-
-    //vypsání lokace spawnpointů
-    this.grid[Math.round(sloupcuRadku / 2) - 1][0] = "spawnpoint";
-    this.grid[Math.round(sloupcuRadku / 2)  - 1][sloupcuRadku - 1] = "spawnpoint";
-    this.grid[0][Math.round(sloupcuRadku / 2) - 1] = "spawnpoint";
-    this.grid[sloupcuRadku - 1][Math.round(sloupcuRadku / 2) - 1] = "spawnpoint";
-
-
-
 
     //gettery
     this.getCtx = function() {
@@ -77,11 +64,19 @@ define([], function () {
     this.getRozmerHradu = function() {
       return rozmerHradu;
     };
+    this.getTrasa = function() {
+      return trasa;
+    }
 
     //settery
     this.setCtx = function(context) {
       ctx = context;
     }
+    this.setTrasa = function(tr) {
+      trasa = tr;
+    }
+
+
 
   }
 
