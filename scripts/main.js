@@ -14,10 +14,11 @@ define(["jquery", "HerniPlocha", "ZakladniUdaje", "Vykreslovac", "Hrac", "Update
     generatorTrasy = new GeneratorTrasy(zakladniUdaje);
     herniPlocha = new HerniPlocha(zakladniUdaje, vykreslovac);
 
+
     generatorNepratel = new GeneratorNepratel(zakladniUdaje);
+    holo = new Nepritel(zakladniUdaje.getSpawnpoint()[1], zakladniUdaje.getSmer()[0], zakladniUdaje.getRozmer() / 22, zakladniUdaje.getCtx(), vykreslovac);
     hrac = new Hrac(zakladniUdaje);
-    hoho = new Nepritel(zakladniUdaje.getSpawnpoint()[1], "trasa", 1, 20, zakladniUdaje.getCtx(), vykreslovac);
-    updateCtrl = new UpdateCtrl(herniPlocha, hrac, hoho);
+    updateCtrl = new UpdateCtrl(herniPlocha, hrac, holo);
 
     controller.buttons.left.on('keydown', function() {
       hrac.getDelo()[2].vystrel(-1, 0);

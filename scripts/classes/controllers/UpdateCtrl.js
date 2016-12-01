@@ -1,9 +1,9 @@
 define([], function() {
-  function UpdateCtrl(herniPlocha, hrac, hoho) {
+  function UpdateCtrl(herniPlocha, hrac, holo) {
     this.mainUpdate = function() {
       herniPlocha.update();
       hrac.update();
-      hoho.update();
+      holo.update();
       console.log(1);
     }
 
