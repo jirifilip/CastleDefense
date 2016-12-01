@@ -16,13 +16,8 @@ define(["jquery", "HerniPlocha", "ZakladniUdaje", "Vykreslovac", "Hrac", "Update
 
 
     generatorNepratel = new GeneratorNepratel(zakladniUdaje);
-    holo3 = new Nepritel(zakladniUdaje.getSpawnpoint()[0], zakladniUdaje.getSmer()[0], zakladniUdaje.getRozmer() / 22, zakladniUdaje.getCtx(), vykreslovac, 1);
-    holo = new Nepritel(zakladniUdaje.getSpawnpoint()[1], zakladniUdaje.getSmer()[1], zakladniUdaje.getRozmer() / 22, zakladniUdaje.getCtx(), vykreslovac, -1);
-    holo2 = new Nepritel(zakladniUdaje.getSpawnpoint()[2], zakladniUdaje.getSmer()[2], zakladniUdaje.getRozmer() / 22, zakladniUdaje.getCtx(), vykreslovac, -1);
-    holo4 = new Nepritel(zakladniUdaje.getSpawnpoint()[3], zakladniUdaje.getSmer()[3], zakladniUdaje.getRozmer() / 22, zakladniUdaje.getCtx(), vykreslovac, 1);
-    nepratele = [holo, holo2, holo3, holo4];
     hrac = new Hrac(zakladniUdaje);
-    updateCtrl = new UpdateCtrl(herniPlocha, hrac, nepratele);
+    updateCtrl = new UpdateCtrl(herniPlocha, hrac, generatorNepratel, zakladniUdaje);
 
     controller.buttons.left.on('keydown', function() {
       hrac.getDelo()[2].vystrel(-1, 0);

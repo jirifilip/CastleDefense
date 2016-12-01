@@ -1,12 +1,12 @@
 define([], function() {
-  function UpdateCtrl(herniPlocha, hrac, nepratele) {
+  function UpdateCtrl(herniPlocha, hrac, gener, zakladniUdaje) {
+    generatorNepratel = gener;
+    pocitadlo = 0;
     this.mainUpdate = function() {
+      pocitadlo++;
       herniPlocha.update();
       hrac.update();
-      for (i = 0; i < nepratele.length; i++) {
-        nepratele[i].update();
-      }
-      console.log(1);
+      generatorNepratel.update();
     }
 
 

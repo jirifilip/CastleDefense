@@ -1,17 +1,20 @@
-define([], function() {
-  function GeneratorNepratel(ZakladniUdaje, cislo) {
-    //funkce pro zkrácení výpočtu trasy
-    //funkce pro výpočet směrů jednotlivých tras
-    //objekt smer - bude tam souřednice x a y
+define(["Nepritel"], function(Nepritel) {
+  function GeneratorNepratel(ZakladniUdaje) {
     var ZakladniUdaje = ZakladniUdaje;
     var trasa = ZakladniUdaje.getTrasa();
-    var rozmerJednohoGridu = ZakladniUdaje.getRozmer() / ZakladniUdaje.getSloupceRadky() / 2;
+    var rozmerJednohoGridu = ZakladniUdaje.getRozmer() / ZakladniUdaje.getSloupceRadky();
     var ctx = ZakladniUdaje.getCtx();
     var vykreslovac = ZakladniUdaje.getVykreslovac();
     var smer = [];
     var zkracenaTrasa = [];
     var objekt;
-    var nepratele = { "trasa1" : [], "trasa2" : [], "trasa3" : [], "trasa4" : []};
+    var nepratele = [ [], [], [], [] ];
+
+    var casGenerace = 200;
+    var pocitadlo = 0;
+
+
+    ZakladniUdaje.setNepratele(nepratele);
 
     function SmerObjekt(smerX, smerY) {
       this.x = smerX;
@@ -62,15 +65,47 @@ define([], function() {
 
     var _init = function() {
       _zkraceniTras();
-      zakladniUdaje.setSmer(smer);
+      ZakladniUdaje.setSmer(smer);
     }();
-  }
 
-  this.generujNepritele = function(cisloTrasy) {
-    spwn = zakladniUdaje.getSpawnpoint()[cisloTrasy - 1];
-    smr = zakladniUdaje.getSmer()[cisloTrasy - 1]
-    nepr = new Nepritel(spwn, smer, rozmerJednohoGridu, ctx, vykreslovac, 1);
-    nepratele["trasa" + cisloTrasy].push(nepr);
+
+    var _generujNepritele = function(i) {
+      zapsano = false;
+      znamenko = 1;
+      if (i == 1 || i == 2) {
+        znamenko = -1;
+      }
+      nepr = new Nepritel(zakladniUdaje.getSpawnpoint()[i], zakladniUdaje.getSmer()[i], zakladniUdaje.getRozmer() / 22, zakladniUdaje.getCtx(), vykreslovac, znamenko);
+      for (j = 0; j < nepratele[i].length; j++) {
+        if (nepratele[i][j] == undefined) {
+          nepratele[i][j] = nepr;
+          zapsano = true;
+        }
+      }
+      if (!zapsano) {
+        nepratele[i].push(nepr);
+      }
+    }
+
+    this.update = function() {
+      pocitadlo++;
+      if (pocitadlo > casGenerace) {
+        pocitadlo = 0;
+        for (i = 0; i < nepratele.length; i++) {
+          _generujNepritele(i);
+        }
+      }
+
+      for (i = 0; i < nepratele.length; i++) {
+        for (j = 0; j < nepratele[i].length; j++) {
+          nepratele[i][j].update();
+        }
+      }
+
+
+    }
+
+
   }
 
   return GeneratorNepratel;
