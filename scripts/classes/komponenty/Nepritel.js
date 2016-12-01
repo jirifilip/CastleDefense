@@ -1,7 +1,7 @@
 //atribud typ, podle kterého bude vytvářet různé typy přátel
 //typ bude číslo, generovat ho bude náhodně generátor nepřátel
 define([], function() {
-  function Nepritel(spwnp, smr, rzmr, ctx, vykres) {
+  function Nepritel(spwnp, smr, rzmr, ctx, vykres, znamenko) {
     const maxZdravi = 100;
     var aktZdravi = maxZdravi;
 
@@ -17,35 +17,15 @@ define([], function() {
     var x = spawnpoint.x + offset;
     var y = spawnpoint.y + offset;
 
-    var pohyb = { "aktPole" : 0, "aktVzdal" : 0, "rychlost" : rozmer / 30 };
+    var rychlostPohybu = 100;
+
+    var pohyb = { "aktPole" : 0, "aktVzdalX" : 0, "aktVzdalY" : 0, "rychlost" : 30, "pocitadlo" : 0 };
 
     var smer = smr;
+    var delkaSmeru = smer.length;
+
     this.getSmer = function() {
       return smer;
-    }
-
-    var rychlostPohybu = 2;
-
-    var _jeSmerNegativni = function(smer) {
-
-      if (smer[0].x > 0) {
-        return false;
-      }
-      else if (smer[0].x = 0) {
-        if (smer[0].y > 0)
-          return false;
-        else {
-          return true;
-        }
-      }
-      else if (smer[0].x < 0) {
-        return true;
-      }
-    }
-    var negativniSmer = _jeSmerNegativni(smer);
-
-    this.negativni = function(smer) {
-      return _jeSmerNegativni(smer);
     }
 
     var _vykresliZdravi = function () {
@@ -55,7 +35,17 @@ define([], function() {
       ctx.fill();
     }
     var _hybejSe = function() {
-      pohyb.aktVzdal += smer[pohyb.aktSour];
+      if (pohyb.aktPole < delkaSmeru) {
+        pohyb.pocitadlo++;
+        x += smer[pohyb.aktPole].x/rychlostPohybu;
+        y += znamenko * smer[pohyb.aktPole].y/rychlostPohybu;
+        if (pohyb.pocitadlo >= rychlostPohybu) {
+          pohyb.pocitadlo = 0;
+          pohyb.aktPole++;
+        }
+
+
+      }
     }
 
     this.update = function () {

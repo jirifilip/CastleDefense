@@ -1,14 +1,17 @@
 define([], function() {
-  function GeneratorNepratel(ZakladniUdaje) {
+  function GeneratorNepratel(ZakladniUdaje, cislo) {
     //funkce pro zkrácení výpočtu trasy
     //funkce pro výpočet směrů jednotlivých tras
     //objekt smer - bude tam souřednice x a y
     var ZakladniUdaje = ZakladniUdaje;
     var trasa = ZakladniUdaje.getTrasa();
-    var rozmerJednohoGridu = ZakladniUdaje.getRozmer() / ZakladniUdaje.getSloupceRadky();
+    var rozmerJednohoGridu = ZakladniUdaje.getRozmer() / ZakladniUdaje.getSloupceRadky() / 2;
+    var ctx = ZakladniUdaje.getCtx();
+    var vykreslovac = ZakladniUdaje.getVykreslovac();
     var smer = [];
     var zkracenaTrasa = [];
     var objekt;
+    var nepratele = { "trasa1" : [], "trasa2" : [], "trasa3" : [], "trasa4" : []};
 
     function SmerObjekt(smerX, smerY) {
       this.x = smerX;
@@ -61,6 +64,13 @@ define([], function() {
       _zkraceniTras();
       zakladniUdaje.setSmer(smer);
     }();
+  }
+
+  this.generujNepritele = function(cisloTrasy) {
+    spwn = zakladniUdaje.getSpawnpoint()[cisloTrasy - 1];
+    smr = zakladniUdaje.getSmer()[cisloTrasy - 1]
+    nepr = new Nepritel(spwn, smer, rozmerJednohoGridu, ctx, vykreslovac, 1);
+    nepratele["trasa" + cisloTrasy].push(nepr);
   }
 
   return GeneratorNepratel;

@@ -75,6 +75,9 @@ define(["GeneratorTrasy"], function (GeneratorTrasy) {
     this.getSmer = function() {
       return smer;
     }
+    this.getVykreslovac = function() {
+      return this.vykreslovac;
+    }
 
 
     //settery
