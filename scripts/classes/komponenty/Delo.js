@@ -3,6 +3,7 @@ define(["Strela"], function(Strela) {
     var nabito = true;
     const MaxNabiti = 100 ;
     var aktNabiti = MaxNabiti;
+    var rozmerPlatna = rozmer * 11;
     var rozmer = rozmer;
     var rozsah = rozmer / 1.5;
     const velikostStrely = rozsah / 5;
@@ -26,18 +27,34 @@ define(["Strela"], function(Strela) {
       ctx.beginPath();
       nabito? ctx.fillStyle = "blue" : ctx.fillStyle = "red";
       //ctx.fillRect(x, y, rozsah * aktNabiti / MaxNabiti, rozsah/2);
-      ctx.arc(x, y, rozsah/4, 0, aktNabiti / MaxNabiti * 2 * Math.PI);
+      ctx.arc(x, y, rozsah/6, 0, aktNabiti / MaxNabiti * 2 * Math.PI);
       ctx.fill();
 
       for (i = 0; i < this.strely.length; i++) {
-        this.strely[i].update();
+        if (this.strely[i] !== undefined) {
+          if (!this.strely[i].mimo) {
+            this.strely[i].update();
+          }
+          else {
+            this.strely[i] = undefined;
+          }
+        }
       }
     }
 
     this.vystrel = function(smerX, smerY) {
       if (nabito) {
-        strela = new Strela (vykreslovac, ctx, velikostStrely, smerX, smerY, x, y);
-        this.strely.push(strela);
+        zapsano = false;
+        strela = new Strela (vykreslovac, ctx, velikostStrely, smerX, smerY, x, y, rozmerPlatna);
+        for (i = 0; i < this.strely.length; i++) {
+          if (this.strely[i] == undefined) {
+            this.strely[i] = strela;
+            zapsano = true;
+          }
+        }
+        if (!zapsano) {
+          this.strely.push(strela);
+        }
         nabito = false;
         aktNabiti = 0;
       }

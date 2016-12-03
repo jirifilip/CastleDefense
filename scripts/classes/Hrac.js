@@ -12,19 +12,21 @@ define(["Delo"], function(Delo) {
     var poziceDel = [];
 
     //nahoře
-    poziceDel[0] = {"x" : lokaceHradu + rozmerHradu / 2, "y" : lokaceHradu};
+    poziceDel[0] = {"x" : lokaceHradu + rozmerHradu / 2, "y" : lokaceHradu + lokaceHradu / 9};
     //dole
-    poziceDel[1] = {"x" : lokaceHradu + rozmerHradu / 2, "y" : lokaceHradu + rozmerHradu};
+    poziceDel[3] = {"x" : lokaceHradu + rozmerHradu / 2, "y" : lokaceHradu + rozmerHradu - lokaceHradu / 9};
     //vlevo
-    poziceDel[2] = {"x" : lokaceHradu, "y" : lokaceHradu + rozmerHradu / 2};
+    poziceDel[2] = {"x" : lokaceHradu + rozmerHradu / 7, "y" : lokaceHradu + rozmerHradu / 2};
     //vpravo
-    poziceDel[3] = {"x" : lokaceHradu + rozmerHradu, "y" : lokaceHradu + rozmerHradu / 2};
+    poziceDel[1] = {"x" : lokaceHradu + rozmerHradu - rozmerHradu / 7, "y" : lokaceHradu + rozmerHradu / 2 };
 
 
     for (i = 0; i < 4; i++) {
       deloTemp = new Delo(poziceDel[i].x, poziceDel[i].y, ctx, rozmerHradu / 3, vykreslovac);
       delo.push(deloTemp)
     }
+    ZakladniUdaje.setDelo(delo);
+
 
     this.update = function() {
       vykreslovac.hrad(ctx, lokaceHradu, rozmerHradu);

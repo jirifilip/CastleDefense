@@ -93,18 +93,6 @@ define([], function() {
         _generujTrasu(udaje[i], grid);
       }
 
-      /*
-      document.write("<table>");
-      for (i = 0; i < sloupcuRadku; i++) {
-        document.write("<tr>");
-        for (j = 0; j < sloupcuRadku; j++) {
-          document.write("<td>" + grid[i][j] + "</td>");
-        }
-        document.write("</tr>");
-      }
-      document.write("</table>");
-      */
-
       poc = {"tr1" : 0, "tr2" : 0, "tr3" : 0, "tr4" : 0};
       for (i = 0; i < sloupcuRadku; i++) {
         for (j = 0; j < sloupcuRadku; j++) {

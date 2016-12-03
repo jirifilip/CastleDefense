@@ -24,6 +24,7 @@ define(["GeneratorTrasy"], function (GeneratorTrasy) {
     var spawnpointy;
     var smer;
     var nepratele;
+    var delo;
 
     this.vykreslovac = Vykreslovac;
 
@@ -82,6 +83,9 @@ define(["GeneratorTrasy"], function (GeneratorTrasy) {
     this.getNepratele = function() {
       return nepratele;
     }
+    this.getDelo = function() {
+      return delo;
+    }
 
 
     //settery
@@ -93,14 +97,16 @@ define(["GeneratorTrasy"], function (GeneratorTrasy) {
     };
     this.setSpawnpoint = function(spwn) {
       spawnpoint = spwn;
-    }
+    };
     this.setSmer = function(smr) {
       smer = smr;
-    }
-    this.setNepratele = function (nepr) {
+    };
+    this.setNepratele = function(nepr) {
       nepratele = nepr;
+    };
+    this.setDelo = function(del) {
+      delo = del;
     }
-
 
 
   }

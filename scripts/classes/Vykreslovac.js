@@ -1,11 +1,11 @@
-define([], function() {
+define([Zvuk], function(Zvuk) {
   function Vykreslovac() {
 
     var pozadi = new Image();
-    pozadi.src = "images/pozadi.jpg";
+    pozadi.src = "images/pozadi2.jpg";
 
     var hrad = new Image();
-    hrad.src = "images/hrad2.jpg";
+    hrad.src = "images/hrad.jpg";
 
     var strela = new Image();
     strela.src = "images/strela.jpg";
@@ -19,9 +19,10 @@ define([], function() {
       nepritel[i] = new Image();
 
     nepritel[0].src = "images/nepritel_nahore.jpg";
-    nepritel[1].src = "images/nepritel_dole.jpg";
+    nepritel[1].src = "images/nepritel_vpravo.jpg";
     nepritel[2].src = "images/nepritel_vlevo.jpg";
-    nepritel[3].src = "images/nepritel_vpravo.jpg";
+    nepritel[3].src = "images/nepritel_dole.jpg";
+
 
 
     this.pozadi = function(ctx, rozmer) {

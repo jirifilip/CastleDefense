@@ -12,6 +12,7 @@ requirejs.config({
     HerniPlocha: "classes/HerniPlocha",
     GeneratorNepratel: "classes/GeneratorNepratel",
     GeneratorTrasy: "classes/GeneratorTrasy",
+    Zvuk: "classes/Zvuk",
 
     //kontrolery
     CollisionCtrl: "classes/controllers/CollisionCtrl",

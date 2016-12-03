@@ -75,9 +75,9 @@ define(["Nepritel"], function(Nepritel) {
       if (i == 1 || i == 2) {
         znamenko = -1;
       }
-      nepr = new Nepritel(zakladniUdaje.getSpawnpoint()[i], zakladniUdaje.getSmer()[i], zakladniUdaje.getRozmer() / 22, zakladniUdaje.getCtx(), vykreslovac, znamenko);
+      nepr = new Nepritel(zakladniUdaje.getSpawnpoint()[i], zakladniUdaje.getSmer()[i], zakladniUdaje.getRozmer() / 22, zakladniUdaje.getCtx(), vykreslovac, znamenko, i);
       for (j = 0; j < nepratele[i].length; j++) {
-        if (nepratele[i][j] == undefined) {
+        if (!zapsano && nepratele[i][j] == undefined) {
           nepratele[i][j] = nepr;
           zapsano = true;
         }
@@ -98,7 +98,8 @@ define(["Nepritel"], function(Nepritel) {
 
       for (i = 0; i < nepratele.length; i++) {
         for (j = 0; j < nepratele[i].length; j++) {
-          nepratele[i][j].update();
+          if (nepratele[i][j] !== undefined)
+            nepratele[i][j].update();
         }
       }
 
