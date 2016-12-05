@@ -48,22 +48,10 @@ define(["jquery"], function($) {
       ctx.clearRect(0, 0, rozmer, rozmer);
     }
 
-
-    /*
-    var _vykresliSpawnpoint = function() {
-      for (i = 0; i < 4; i++) {
-        vykreslovac.nepritel(ctx, spawnpointy[i].x, spawnpointy[i].y, rozmerJednohoGridu / 2, 0);
-      }
-    }
-    */
-
     this.update = function() {
       _clear();
       vykreslovac.pozadi(ctx, rozmer);
       _vykresliTrasu(trasa, ctx);
-      for (i = 0; i < spawnpoint.length; i++) {
-        vykreslovac.nepritel(ctx, spawnpoint[i].x + rozmerJednohoGridu / 4, spawnpoint[i].y  + rozmerJednohoGridu / 4, rozmerJednohoGridu / 2, 1);
-      }
     }
 
 

@@ -1,4 +1,4 @@
-define(["Strela"], function(Strela) {
+define(["Strela", "Zvuk"], function(Strela, Zvuk) {
   function Delo(x, y, ctx, rozmer, Vykreslovac) {
     var nabito = true;
     const MaxNabiti = 100 ;
@@ -11,6 +11,7 @@ define(["Strela"], function(Strela) {
     var strela;
     var x = x;
     var y = y;
+    var strelbaDeloZvuk = new Zvuk("sounds/delo.mp3");
 
     this.strely = [];
 
@@ -45,6 +46,7 @@ define(["Strela"], function(Strela) {
     this.vystrel = function(smerX, smerY) {
       if (nabito) {
         zapsano = false;
+        strelbaDeloZvuk.prehraj();
         strela = new Strela (vykreslovac, ctx, velikostStrely, smerX, smerY, x, y, rozmerPlatna);
         for (i = 0; i < this.strely.length; i++) {
           if (this.strely[i] == undefined) {

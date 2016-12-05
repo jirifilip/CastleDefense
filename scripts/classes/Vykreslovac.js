@@ -1,5 +1,7 @@
-define([Zvuk], function(Zvuk) {
+define(["Zvuk"], function(Zvuk) {
   function Vykreslovac() {
+    var uvodniObrazovka = new Image();
+    uvodniObrazovka.src = "images/uvodni_obrazovka.jpg"
 
     var pozadi = new Image();
     pozadi.src = "images/pozadi2.jpg";
@@ -24,22 +26,25 @@ define([Zvuk], function(Zvuk) {
     nepritel[3].src = "images/nepritel_dole.jpg";
 
 
-
+    this.uvodniObrazovka = function(ctx, rozmer) {
+      ctx.drawImage(uvodniObrazovka, 0, 0, rozmer, rozmer);
+    };
     this.pozadi = function(ctx, rozmer) {
       ctx.drawImage(pozadi, 0, 0, rozmer, rozmer);
-    }
+    };
     this.hrad = function(ctx, souradnice, rozmer) {
       ctx.drawImage(hrad, souradnice, souradnice, rozmer, rozmer);
-    }
+    };
     this.strela = function(ctx, x, y, rozmer) {
       ctx.drawImage(strela, x, y, rozmer, rozmer);
-    }
+    };
     this.nepritel = function(ctx, x, y, rozmer, ktery) {
       ctx.drawImage(nepritel[ktery], x, y, rozmer, rozmer);
-    }
+    };
     this.cesta = function(ctx, x, y, rozmer) {
       ctx.drawImage(cesta, x, y, rozmer, rozmer);
-    }
+    };
+
 
   }
 

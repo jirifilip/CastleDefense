@@ -1,24 +1,22 @@
 define(["jquery"], function($) {
   function Zvuk(src) {
-    _cacheDom = function() {
-      var $zvuk = $("<audio><audio/>")
-      var $body = $(body);
-    }();
+    this.zvuk = document.createElement("audio");
+    this.zvuk.src = src;
 
-    _init = function() {
-      $zvuk.attr({
-        "preload" : "auto",
-        "controls" : "none",
-      });
-      $zvuk.css({
-        "display" : "none",
-      });
-      $body.append($zvuk);
-    }();
+    this.zvuk.setAttribute("preload", "auto");
+    this.zvuk.setAttribute("controls", "none");
+    this.zvuk.style.display = "none";
 
-    this.prehraj() {
-      $zvuk.play();
+    document.body.appendChild(this.zvuk);
+
+    this.stop = function() {
+      this.zvuk.pause();
     }
+
+    this.prehraj = function(){
+        this.zvuk.play();
+    }
+
   }
 
   return Zvuk;
