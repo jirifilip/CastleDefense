@@ -1,30 +1,35 @@
 //atribud typ, podle kterého bude vytvářet různé typy přátel
 //typ bude číslo, generovat ho bude náhodně generátor nepřátel
 define([], function() {
-  function Nepritel(spwnp, smr, rzmr, ctx, vykres, znamenko, obrz) {
-    const maxZdravi = 100;
+  function Nepritel(zaklUd, znamenko, obrz, druh) {
+    //číslo 1 - 3, 3 bude nejtěžší
+    const druhNepritele = druh;
+
+    const maxZdravi = 50 * druhNepritele;
     var aktZdravi = maxZdravi;
     var zraneni = 50;
 
+    var i = obrz;
     var obrazek = obrz;
+    var zakladniUdaje = zaklUd;
 
-    var spawnpoint = spwnp;
-    var vykreslovac = vykres;
+    var spawnpoint = zakladniUdaje.getSpawnpoint()[i];
+    var vykreslovac = zakladniUdaje.getVykreslovac();
 
-    var rozmer = rzmr;
+    var rozmer = zakladniUdaje.getRozmer() / 22;
     var polohaZdravi = rozmer / 2;
     var offset = rozmer / 2;
 
-    var ctx = ctx;
+    var ctx = zakladniUdaje.getCtx();
 
     var x = spawnpoint.x + offset;
     var y = spawnpoint.y + offset;
 
     var rychlostPohybu = 100;
 
-    var pohyb = { "aktPole" : 0, "aktVzdalX" : 0, "aktVzdalY" : 0, "rychlost" : 30, "pocitadlo" : 0, "konec" : false };
+    var pohyb = { "aktPole" : 0, "aktVzdalX" : 0, "aktVzdalY" : 0, "rychlost" : 30, "pocitadlo" : 0, "konec" : false};
 
-    var smer = smr;
+    var smer = zakladniUdaje.getSmer()[i];
     var delkaSmeru = smer.length;
 
     this.getSmer = function() {
@@ -51,6 +56,7 @@ define([], function() {
         if (!pohyb.konec) {
           pohyb.aktPole--;
           pohyb.konec = true;
+          zakladniUdaje.setPauza();
         }
       }
     }
@@ -58,8 +64,9 @@ define([], function() {
     this.update = function () {
       _hybejSe();
        _vykresliZdravi();
-      vykreslovac.nepritel(ctx, x, y, rozmer, obrazek);
+      vykreslovac.nepritel(ctx, x, y, rozmer, druh, obrazek);
       if (aktZdravi <= 0) {
+        zakladniUdaje.setPocetZabitych();
         pohyb.konec = true;
       }
     }

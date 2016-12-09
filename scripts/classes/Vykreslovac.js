@@ -15,15 +15,23 @@ define(["Zvuk"], function(Zvuk) {
     var cesta = new Image();
     cesta.src = "images/cesta.jpg";
 
+    var _nactiNepratele = function(cil, druh) {
+      for (i = 0; i < 4; i++) {
+        cil[i] = new Image();
+      }
+      cil[0].src = "images/" + druh + "_nahore.jpg";
+      cil[1].src = "images/" + druh + "_vpravo.jpg";
+      cil[2].src = "images/" + druh + "_vlevo.jpg";
+      cil[3].src = "images/" + druh + "_dole.jpg";
+    }
+
     //nahore dole vlevo vpravo
     var nepritel = []
-    for (i = 0; i < 4; i++)
-      nepritel[i] = new Image();
+    nepritel[0] = [];
+    nepritel[1] = [];
+    _nactiNepratele(nepritel[0], "nepritel");
+    _nactiNepratele(nepritel[1], "skret");
 
-    nepritel[0].src = "images/nepritel_nahore.jpg";
-    nepritel[1].src = "images/nepritel_vpravo.jpg";
-    nepritel[2].src = "images/nepritel_vlevo.jpg";
-    nepritel[3].src = "images/nepritel_dole.jpg";
 
 
     this.uvodniObrazovka = function(ctx, rozmer) {
@@ -38,8 +46,8 @@ define(["Zvuk"], function(Zvuk) {
     this.strela = function(ctx, x, y, rozmer) {
       ctx.drawImage(strela, x, y, rozmer, rozmer);
     };
-    this.nepritel = function(ctx, x, y, rozmer, ktery) {
-      ctx.drawImage(nepritel[ktery], x, y, rozmer, rozmer);
+    this.nepritel = function(ctx, x, y, rozmer, druh, animace) {
+      ctx.drawImage(nepritel[druh - 1][animace], x, y, rozmer, rozmer);
     };
     this.cesta = function(ctx, x, y, rozmer) {
       ctx.drawImage(cesta, x, y, rozmer, rozmer);

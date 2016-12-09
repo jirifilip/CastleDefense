@@ -53,8 +53,9 @@ define([], function() {
               }
             }
 
-            if (nepratele[i][j].getPohyb()["konec"] == true)
+            if (nepratele[i][j].getPohyb()["konec"] == true) {
               nepratele[i][j] = undefined;
+            }
           }
         }
       }

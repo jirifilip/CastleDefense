@@ -3,12 +3,14 @@ define(["Nepritel"], function(Nepritel) {
     var ZakladniUdaje = ZakladniUdaje;
     var trasa = ZakladniUdaje.getTrasa();
     var rozmerJednohoGridu = ZakladniUdaje.getRozmer() / ZakladniUdaje.getSloupceRadky();
-    var ctx = ZakladniUdaje.getCtx();
     var vykreslovac = ZakladniUdaje.getVykreslovac();
     var smer = [];
     var zkracenaTrasa = [];
     var objekt;
     var nepratele = [ [], [], [], [] ];
+    var pocitadloNepr = [0, 0, 0, 0];
+    var pocitadloGenerovani = [6, 5, 4, 3];
+    var druh;
 
     var casGenerace = 200;
     var pocitadlo = 0;
@@ -70,12 +72,17 @@ define(["Nepritel"], function(Nepritel) {
 
 
     var _generujNepritele = function(i) {
+      druh = 1;
+      if (pocitadloNepr[i] % 2 == 0) {
+        druh = 2;
+      }
+
       zapsano = false;
       znamenko = 1;
       if (i == 1 || i == 2) {
         znamenko = -1;
       }
-      nepr = new Nepritel(zakladniUdaje.getSpawnpoint()[i], zakladniUdaje.getSmer()[i], zakladniUdaje.getRozmer() / 22, zakladniUdaje.getCtx(), vykreslovac, znamenko, i);
+      nepr = new Nepritel(ZakladniUdaje, znamenko, i, druh);
       for (j = 0; j < nepratele[i].length; j++) {
         if (!zapsano && nepratele[i][j] == undefined) {
           nepratele[i][j] = nepr;
@@ -92,10 +99,10 @@ define(["Nepritel"], function(Nepritel) {
       if (pocitadlo > casGenerace) {
         pocitadlo = 0;
         for (i = 0; i < nepratele.length; i++) {
+          pocitadloNepr[i]++;
           _generujNepritele(i);
         }
       }
-
       for (i = 0; i < nepratele.length; i++) {
         for (j = 0; j < nepratele[i].length; j++) {
           if (nepratele[i][j] !== undefined)

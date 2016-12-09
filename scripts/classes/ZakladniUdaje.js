@@ -9,6 +9,9 @@ define(["GeneratorTrasy"], function (GeneratorTrasy) {
     var rozmerJednohoGridu = rozmer / sloupcuRadku;
     var ctx;
 
+    var pauza = false;
+    var pocetZabitych = 0;
+
     //vypočtení lokace hradu, výpočty jsou už upravené pro cyklus
     var zakladniSouradniceHradu = Math.round(sloupcuRadku / rozmerHraduStrana);
 
@@ -86,6 +89,15 @@ define(["GeneratorTrasy"], function (GeneratorTrasy) {
     this.getDelo = function() {
       return delo;
     }
+    this.getPauza = function() {
+      return pauza;
+    }
+    this.getPocetZabitych = function() {
+      return pocetZabitych;
+    }
+    this.getDruhyNepratel = function() {
+      return druhyNepratel;
+    }
 
 
     //settery
@@ -106,6 +118,12 @@ define(["GeneratorTrasy"], function (GeneratorTrasy) {
     };
     this.setDelo = function(del) {
       delo = del;
+    }
+    this.setPauza = function() {
+      pauza = !pauza;
+    }
+    this.setPocetZabitych = function() {
+      pocetZabitych++;
     }
 
 

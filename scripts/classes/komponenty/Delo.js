@@ -43,8 +43,8 @@ define(["Strela", "Zvuk"], function(Strela, Zvuk) {
       }
     }
 
-    this.vystrel = function(smerX, smerY) {
-      if (nabito) {
+    this.vystrel = function(smerX, smerY, bezCooldownu) {
+      if (nabito || bezCooldownu) {
         zapsano = false;
         strelbaDeloZvuk.prehraj();
         strela = new Strela (vykreslovac, ctx, velikostStrely, smerX, smerY, x, y, rozmerPlatna);
@@ -57,8 +57,10 @@ define(["Strela", "Zvuk"], function(Strela, Zvuk) {
         if (!zapsano) {
           this.strely.push(strela);
         }
-        nabito = false;
-        aktNabiti = 0;
+        if (!bezCooldownu) {
+          nabito = false;
+          aktNabiti = 0;
+        }
       }
 
     }

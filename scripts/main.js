@@ -22,20 +22,26 @@ define(["jquery", "HerniPlocha", "ZakladniUdaje", "Vykreslovac", "Hrac", "Update
     updateCtrl = new UpdateCtrl(herniPlocha, hrac, generatorNepratel, zakladniUdaje, collisionCtrl);
 
     controller.buttons.left.on('keydown', function() {
-      hrac.getDelo()[2].vystrel(-1, 0);
+      hrac.getDelo()[2].vystrel(-1, 0, false);
     } );
     controller.buttons.right.on('keydown', function() {
-      hrac.getDelo()[1].vystrel(1, 0);
+      hrac.getDelo()[1].vystrel(1, 0, false);
     } );
     controller.buttons.up.on('keydown' , function() {
-      hrac.getDelo()[0].vystrel(0, -1);
+      hrac.getDelo()[0].vystrel(0, -1, false);
     } );
     controller.buttons.down.on('keydown', function() {
-      hrac.getDelo()[3].vystrel(0, 1);
+      hrac.getDelo()[3].vystrel(0, 1, false);
+    } );
+    controller.buttons.A.on('keydown', function() {
+      hrac.getDelo()[0].vystrel(0, -1, true);
+      hrac.getDelo()[1].vystrel(1, 0, true);
+      hrac.getDelo()[2].vystrel(-1, 0, true);
+      hrac.getDelo()[3].vystrel(0, 1, true);
     } );
 
   });
 
 
-  controller.buttons.A.on('keydown' );
+
 })
