@@ -29,9 +29,13 @@ define(["Zvuk"], function(Zvuk) {
     var nepritel = []
     nepritel[0] = [];
     nepritel[1] = [];
+    nepritel[2] = [];
     _nactiNepratele(nepritel[0], "nepritel");
     _nactiNepratele(nepritel[1], "skret");
+    _nactiNepratele(nepritel[2], "beranidlo");
 
+    var barikada = [];
+    _nactiNepratele(barikada, "palisada");
 
 
     this.uvodniObrazovka = function(ctx, rozmer) {
@@ -52,6 +56,9 @@ define(["Zvuk"], function(Zvuk) {
     this.cesta = function(ctx, x, y, rozmer) {
       ctx.drawImage(cesta, x, y, rozmer, rozmer);
     };
+    this.barikada = function(ctx, x, y, rozmer, i) {
+      ctx.drawImage(barikada[i], x, y, rozmer, rozmer);
+    }
 
 
   }

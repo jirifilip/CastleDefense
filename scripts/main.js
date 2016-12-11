@@ -1,4 +1,26 @@
-define(["jquery", "HerniPlocha", "ZakladniUdaje", "Vykreslovac", "Hrac", "UpdateCtrl", "GeneratorTrasy", "GeneratorNepratel", "CollisionCtrl"], function($, HerniPlocha, ZakladniUdaje, Vykreslovac, Hrac, UpdateCtrl, GeneratorTrasy, GeneratorNepratel, CollisionCtrl) {
+define(["jquery",
+        "HerniPlocha",
+        "ZakladniUdaje",
+        "Vykreslovac",
+        "Hrac",
+        "UpdateCtrl",
+        "GeneratorTrasy",
+        "GeneratorNepratel",
+        "CollisionCtrl",
+        "UpgradeCtrl"],
+function($,
+        HerniPlocha,
+        ZakladniUdaje,
+        Vykreslovac,
+        Hrac,
+        UpdateCtrl,
+        GeneratorTrasy,
+        GeneratorNepratel,
+        CollisionCtrl,
+        UpgradeCtrl)
+  {
+
+
   var controller = gamee.controller.requestController('FiveButtons', {enableKeyboard: true});
 
 
@@ -19,7 +41,8 @@ define(["jquery", "HerniPlocha", "ZakladniUdaje", "Vykreslovac", "Hrac", "Update
     hrac = new Hrac(zakladniUdaje);
 
     collisionCtrl = new CollisionCtrl(zakladniUdaje);
-    updateCtrl = new UpdateCtrl(herniPlocha, hrac, generatorNepratel, zakladniUdaje, collisionCtrl);
+    upgradeCtrl = new UpgradeCtrl(zakladniUdaje);
+    updateCtrl = new UpdateCtrl(herniPlocha, hrac, generatorNepratel, zakladniUdaje, collisionCtrl, upgradeCtrl);
 
     controller.buttons.left.on('keydown', function() {
       hrac.getDelo()[2].vystrel(-1, 0, false);
@@ -34,10 +57,10 @@ define(["jquery", "HerniPlocha", "ZakladniUdaje", "Vykreslovac", "Hrac", "Update
       hrac.getDelo()[3].vystrel(0, 1, false);
     } );
     controller.buttons.A.on('keydown', function() {
-      hrac.getDelo()[0].vystrel(0, -1, true);
-      hrac.getDelo()[1].vystrel(1, 0, true);
-      hrac.getDelo()[2].vystrel(-1, 0, true);
-      hrac.getDelo()[3].vystrel(0, 1, true);
+      if (zakladniUdaje.getUpgradeReady()) {
+        zakladniUdaje.setUpgradeReady(false);
+        upgradeCtrl.getAktUpg().pouzij();
+      }
     } );
 
   });

@@ -18,6 +18,11 @@ requirejs.config({
     CollisionCtrl: "classes/controllers/CollisionCtrl",
     ScoreCtrl: "classes/controllers/ScoreCtrl",
     UpdateCtrl: "classes/controllers/UpdateCtrl",
+    UpgradeCtrl: "classes/controllers/UpgradeCtrl",
+      //upgrady
+      BarikadyUpg: "classes/controllers/upgrady/BarikadyUpg",
+      CooldownUpg: "classes/controllers/upgrady/CooldownUpg",
+      VsechnySmeryUpg: "classes/controllers/upgrady/VsechnySmeryUpg",
 
     //komponenty
     Delo: "classes/komponenty/Delo",

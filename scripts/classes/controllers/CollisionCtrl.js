@@ -39,7 +39,6 @@ define([], function() {
             for (k = 0; k < strely[i].length; k++) {
               //test, zda střela existuje
               if (strely[i][k] !== undefined) {
-                  console.log("testuji");
                   str = new Sourad(strely[i][k].getXY().x, strely[i][k].getXY().y, strely[i][k].getXY().rozmer);
                   //test pro kolizi
                   if (/*Zleva*/str.konX >= nepr.zacX && str.zacX <= nepr.zacX &&  str.zacY >= nepr.zacY && str.konY <= nepr.konY ||

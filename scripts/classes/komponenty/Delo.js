@@ -1,7 +1,8 @@
 define(["Strela", "Zvuk"], function(Strela, Zvuk) {
-  function Delo(x, y, ctx, rozmer, Vykreslovac) {
+  function Delo(x, y, ctx, rozmer, Vykreslovac, zaklUd) {
+    var zakladniUdaje = zaklUd;
     var nabito = true;
-    const MaxNabiti = 100 ;
+    var MaxNabiti = zakladniUdaje.getCooldownDela();
     var aktNabiti = MaxNabiti;
     var rozmerPlatna = rozmer * 11;
     var rozmer = rozmer;
@@ -18,6 +19,7 @@ define(["Strela", "Zvuk"], function(Strela, Zvuk) {
     var i;
 
     this.update = function() {
+      MaxNabiti = zakladniUdaje.getCooldownDela()
       if (!nabito) {
         aktNabiti++;
         if (aktNabiti >= MaxNabiti) {
@@ -44,6 +46,7 @@ define(["Strela", "Zvuk"], function(Strela, Zvuk) {
     }
 
     this.vystrel = function(smerX, smerY, bezCooldownu) {
+      console.log(zakladniUdaje.getCooldownDela());
       if (nabito || bezCooldownu) {
         zapsano = false;
         strelbaDeloZvuk.prehraj();

@@ -1,9 +1,10 @@
 define([], function() {
-  function UpdateCtrl(herniPlocha, hrac, gener, zaklUd, collCtrl) {
+  function UpdateCtrl(herniPlocha, hrac, gener, zaklUd, collCtrl, upgCtrl) {
     var collisionCtrl = collCtrl;
+    var upgradeCtrl = upgCtrl;
     var generatorNepratel = gener;
     pocitadlo = 0;
-    zakladniUdaje = zaklUd;
+    var zakladniUdaje = zaklUd;
     this.mainUpdate = function() {
       if (!zakladniUdaje.getPauza()) {
         pocitadlo++;
@@ -11,6 +12,7 @@ define([], function() {
         generatorNepratel.update();
         hrac.update();
         collisionCtrl.update();
+        upgradeCtrl.update();
       }
     }
 

@@ -6,13 +6,29 @@ define(["Nepritel"], function(Nepritel) {
     var vykreslovac = ZakladniUdaje.getVykreslovac();
     var smer = [];
     var zkracenaTrasa = [];
+
     var objekt;
+
     var nepratele = [ [], [], [], [] ];
     var pocitadloNepr = [0, 0, 0, 0];
-    var pocitadloGenerovani = [6, 5, 4, 3];
+
+    var obtiznost = zakladniUdaje.getObtiznost().generovani;
+
+    var generovaniNepr = {
+      pocitadloGenerovani : [0, 0, 0, 0],
+      vychCasGen : [obtiznost * 7, obtiznost * 6, obtiznost * 5, obtiznost * 4], //50 je jedna vteřina
+      casGen : "", //bude sloužit k tomu, aby se nepřekročil limit obtížnosti
+      //300 znamená každých šest sekund atd.
+    }
+    //proházení času na trasách, aby se negenerovalo pokaždé stejně na stejné trase
+    generovaniNepr.vychCasGen.sort(function(a, b) {
+      return (0.5 - Math.random())
+    })
+    generovaniNepr.casGen = generovaniNepr.vychCasGen; //ze začátku budou mít stejné hodnoty
+    //postupně se budou odčítat
+
     var druh;
 
-    var casGenerace = 200;
     var pocitadlo = 0;
 
 
@@ -75,7 +91,11 @@ define(["Nepritel"], function(Nepritel) {
       druh = 1;
       if (pocitadloNepr[i] % 2 == 0) {
         druh = 2;
+        if (pocitadloNepr[i] % 8 == 0) {
+          druh = 3;
+        }
       }
+
 
       zapsano = false;
       znamenko = 1;
@@ -95,22 +115,25 @@ define(["Nepritel"], function(Nepritel) {
     }
 
     this.update = function() {
-      pocitadlo++;
-      if (pocitadlo > casGenerace) {
-        pocitadlo = 0;
-        for (i = 0; i < nepratele.length; i++) {
-          pocitadloNepr[i]++;
+      //bude fungovat tak, aby pro každou trasu generovalo nepřátele v jiném intervalu
+      for (i = 0; i < nepratele.length; i++) {
+        generovaniNepr.pocitadloGenerovani[i]++
+        if (generovaniNepr.pocitadloGenerovani[i] >= generovaniNepr.casGen[i]) {
+          pocitadloNepr[i]++; //počítá, kolik nepřátel se už vygenerovalo
           _generujNepritele(i);
+          generovaniNepr.pocitadloGenerovani[i] = 0;
+          if (!(generovaniNepr.vychCasGen - generovaniNepr.casGen >= obtiznost * 4)) {
+            generovaniNepr.casGen[i] -= 5;
+          }
         }
       }
+
       for (i = 0; i < nepratele.length; i++) {
         for (j = 0; j < nepratele[i].length; j++) {
           if (nepratele[i][j] !== undefined)
             nepratele[i][j].update();
         }
       }
-
-
     }
 
 

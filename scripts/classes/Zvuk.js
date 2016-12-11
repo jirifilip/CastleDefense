@@ -6,6 +6,7 @@ define(["jquery"], function($) {
     this.zvuk.setAttribute("preload", "auto");
     this.zvuk.setAttribute("controls", "none");
     this.zvuk.style.display = "none";
+    this.zvuk.volume = 0.05;
 
     document.body.appendChild(this.zvuk);
 

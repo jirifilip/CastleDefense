@@ -11,6 +11,9 @@ define(["GeneratorTrasy"], function (GeneratorTrasy) {
 
     var pauza = false;
     var pocetZabitych = 0;
+    var upgradeReady = false;
+    var cooldownDela = 100;
+    var barikady = false;
 
     //vypočtení lokace hradu, výpočty jsou už upravené pro cyklus
     var zakladniSouradniceHradu = Math.round(sloupcuRadku / rozmerHraduStrana);
@@ -29,6 +32,14 @@ define(["GeneratorTrasy"], function (GeneratorTrasy) {
     var nepratele;
     var delo;
 
+    //rychlost, zdraví různých druhů nepřátel
+    const obtiznost = {rychlost : 50, zdravi : 25, generovani : 50}; //z tohoto údaje vypočítáme pohyb nepřátel
+    var druhyNepratel = [
+      {"rychlost" : obtiznost.rychlost * 2, "zdravi" : obtiznost.zdravi},
+      {"rychlost" : obtiznost.rychlost * 4, "zdravi" : obtiznost.zdravi * 2},
+      {"rychlost" : obtiznost.rychlost * 6, "zdravi" : obtiznost.zdravi * 3}, //čím vyšší rychlost, tím pomalejší
+    ]
+
     this.vykreslovac = Vykreslovac;
 
     this.grid = [];
@@ -40,6 +51,15 @@ define(["GeneratorTrasy"], function (GeneratorTrasy) {
         this.grid[i][j] = "NIC";
       }
     }
+
+    //vypočtení lokace, kde se bude nacházet upgrade
+    var lokaceUpgradu = {
+      x : Math.round(sloupcuRadku/2) * rozmerJednohoGridu,
+      y : rozmerJednohoGridu / 4,
+      sirkaX : Math.round(sloupcuRadku/2 - 1) * rozmerJednohoGridu,
+      sirkaY : rozmerJednohoGridu / 2,
+    }
+
 
     //vypsání lokace hradu
     for (i = zakladniSouradniceHradu; i < zakladniSouradniceHradu + rozmerHraduStrana; i++) {
@@ -98,32 +118,62 @@ define(["GeneratorTrasy"], function (GeneratorTrasy) {
     this.getDruhyNepratel = function() {
       return druhyNepratel;
     }
+    this.getObtiznost = function() {
+      return obtiznost;
+    }
+    this.getLokaceUpgradu = function() {
+      return lokaceUpgradu;
+    }
+    this.getUpgradeReady = function() {
+      return upgradeReady;
+    }
+    this.getCooldownDela = function() {
+      return cooldownDela;
+    }
+    this.getRozmerJednohoGridu = function() {
+      return rozmerJednohoGridu;
+    }
+    this.getBarikady = function() {
+      return barikady;
+    }
 
 
     //settery
-    this.setCtx = function(context) {
-      ctx = context;
+    this.setCtx = function(val) {
+      ctx = val;
     };
-    this.setTrasa = function(tr) {
-      trasa = tr;
+    this.setTrasa = function(val) {
+      trasa = val;
     };
-    this.setSpawnpoint = function(spwn) {
-      spawnpoint = spwn;
+    this.setSpawnpoint = function(val) {
+      spawnpoint = val;
     };
-    this.setSmer = function(smr) {
-      smer = smr;
+    this.setSmer = function(val) {
+      smer = val;
     };
-    this.setNepratele = function(nepr) {
-      nepratele = nepr;
+    this.setNepratele = function(val) {
+      nepratele = val;
     };
-    this.setDelo = function(del) {
-      delo = del;
+    this.setDelo = function(val) {
+      delo = val;
     }
     this.setPauza = function() {
       pauza = !pauza;
     }
-    this.setPocetZabitych = function() {
-      pocetZabitych++;
+    this.incPocetZabitych = function(val) {
+      pocetZabitych++
+    }
+    this.setPocetZabitych = function(val) {
+      pocetZabitych = val;
+    }
+    this.setUpgradeReady = function(val) {
+      upgradeReady = val;
+    }
+    this.setCooldownDela = function(val) {
+      cooldownDela = val;
+    }
+    this.setBarikady = function(val) {
+      barikady = val;
     }
 
 

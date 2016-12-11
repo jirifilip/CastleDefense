@@ -2,16 +2,21 @@
 //typ bude číslo, generovat ho bude náhodně generátor nepřátel
 define([], function() {
   function Nepritel(zaklUd, znamenko, obrz, druh) {
-    //číslo 1 - 3, 3 bude nejtěžší
+    var zakladniUdaje = zaklUd;
+
+    //číslo 1 - 3
+    //3 je nejtěžší
     const druhNepritele = druh;
 
-    const maxZdravi = 50 * druhNepritele;
+    const maxZdravi = zakladniUdaje.getDruhyNepratel()[druh-1].zdravi
     var aktZdravi = maxZdravi;
-    var zraneni = 50;
+    const zraneni = zakladniUdaje.getObtiznost().zdravi; //jak moc nepřítele poškodí jedna střela
+
+    var rychlostPohybu =zakladniUdaje.getDruhyNepratel()[druh-1].rychlost
 
     var i = obrz;
     var obrazek = obrz;
-    var zakladniUdaje = zaklUd;
+
 
     var spawnpoint = zakladniUdaje.getSpawnpoint()[i];
     var vykreslovac = zakladniUdaje.getVykreslovac();
@@ -25,7 +30,8 @@ define([], function() {
     var x = spawnpoint.x + offset;
     var y = spawnpoint.y + offset;
 
-    var rychlostPohybu = 100;
+
+
 
     var pohyb = { "aktPole" : 0, "aktVzdalX" : 0, "aktVzdalY" : 0, "rychlost" : 30, "pocitadlo" : 0, "konec" : false};
 
@@ -56,7 +62,12 @@ define([], function() {
         if (!pohyb.konec) {
           pohyb.aktPole--;
           pohyb.konec = true;
-          zakladniUdaje.setPauza();
+          if (zakladniUdaje.getBarikady()) {
+            aktZdravi -= aktZdravi
+          }
+          else {
+            zakladniUdaje.setPauza();
+          }
         }
       }
     }
@@ -66,7 +77,7 @@ define([], function() {
        _vykresliZdravi();
       vykreslovac.nepritel(ctx, x, y, rozmer, druh, obrazek);
       if (aktZdravi <= 0) {
-        zakladniUdaje.setPocetZabitych();
+        zakladniUdaje.incPocetZabitych();
         pohyb.konec = true;
       }
     }

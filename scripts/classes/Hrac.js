@@ -1,9 +1,10 @@
 define(["Delo"], function(Delo) {
-  function Hrac(ZakladniUdaje) {
-    var lokaceHradu = ZakladniUdaje.getLokaceHradu();
-    var rozmerHradu = ZakladniUdaje.getRozmerHradu();
-    var ctx = ZakladniUdaje.getCtx();
-    var vykreslovac = ZakladniUdaje.vykreslovac;
+  function Hrac(zaklUd) {
+    var zakladniUdaje = zaklUd
+    var lokaceHradu = zakladniUdaje.getLokaceHradu();
+    var rozmerHradu = zakladniUdaje.getRozmerHradu();
+    var ctx = zakladniUdaje.getCtx();
+    var vykreslovac = zakladniUdaje.vykreslovac;
 
     var delo = [];
     var deloTemp
@@ -22,10 +23,10 @@ define(["Delo"], function(Delo) {
 
 
     for (i = 0; i < 4; i++) {
-      deloTemp = new Delo(poziceDel[i].x, poziceDel[i].y, ctx, rozmerHradu / 3, vykreslovac);
+      deloTemp = new Delo(poziceDel[i].x, poziceDel[i].y, ctx, rozmerHradu / 3, vykreslovac, zakladniUdaje);
       delo.push(deloTemp)
     }
-    ZakladniUdaje.setDelo(delo);
+    zakladniUdaje.setDelo(delo);
 
 
     this.update = function() {
