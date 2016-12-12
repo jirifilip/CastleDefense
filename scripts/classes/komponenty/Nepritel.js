@@ -1,8 +1,16 @@
 //atribud typ, podle kterého bude vytvářet různé typy přátel
 //typ bude číslo, generovat ho bude náhodně generátor nepřátel
-define([], function() {
+define([
+  "Zvuk"
+], function(
+  Zvuk
+) {
   function Nepritel(zaklUd, znamenko, obrz, druh) {
     var zakladniUdaje = zaklUd;
+
+    //zvuk, který se přehraje při umrtí
+    var skoreZvuk = new Zvuk("sounds/skore.mp3");
+    skoreZvuk.setVolume(0.4);
 
     //číslo 1 - 3
     //3 je nejtěžší
@@ -58,16 +66,16 @@ define([], function() {
           pohyb.aktPole++;
         }
       }
+      if (pohyb.aktPole >= delkaSmeru - 1) {
+        if (zakladniUdaje.getAktualniUpgrade() == "barikady") {
+          aktZdravi -= aktZdravi
+        }
+      }
       if (pohyb.aktPole >= delkaSmeru) {
         if (!pohyb.konec) {
           pohyb.aktPole--;
           pohyb.konec = true;
-          if (zakladniUdaje.getBarikady()) {
-            aktZdravi -= aktZdravi
-          }
-          else {
-            zakladniUdaje.setPauza();
-          }
+          zakladniUdaje.setPauza();
         }
       }
     }
@@ -79,6 +87,7 @@ define([], function() {
       if (aktZdravi <= 0) {
         zakladniUdaje.incPocetZabitych();
         pohyb.konec = true;
+        skoreZvuk.prehraj();
       }
     }
 

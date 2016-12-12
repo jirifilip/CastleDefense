@@ -45,21 +45,29 @@ function($,
     updateCtrl = new UpdateCtrl(herniPlocha, hrac, generatorNepratel, zakladniUdaje, collisionCtrl, upgradeCtrl);
 
     controller.buttons.left.on('keydown', function() {
-      hrac.getDelo()[2].vystrel(-1, 0, false);
+      if (!zakladniUdaje.getUzJednaStrela().existuje) {
+        hrac.getDelo()[2].vystrel(-1, 0, false);
+      }
     } );
     controller.buttons.right.on('keydown', function() {
-      hrac.getDelo()[1].vystrel(1, 0, false);
+      if (!zakladniUdaje.getUzJednaStrela().existuje) {
+        hrac.getDelo()[1].vystrel(1, 0, false);
+      }
     } );
     controller.buttons.up.on('keydown' , function() {
-      hrac.getDelo()[0].vystrel(0, -1, false);
+      if (!zakladniUdaje.getUzJednaStrela().existuje) {
+        hrac.getDelo()[0].vystrel(0, -1, false);
+      }
     } );
     controller.buttons.down.on('keydown', function() {
-      hrac.getDelo()[3].vystrel(0, 1, false);
+      if (!zakladniUdaje.getUzJednaStrela().existuje) {
+        hrac.getDelo()[3].vystrel(0, 1, false);
+      }
     } );
     controller.buttons.A.on('keydown', function() {
       if (zakladniUdaje.getUpgradeReady()) {
-        zakladniUdaje.setUpgradeReady(false);
-        upgradeCtrl.getAktUpg().pouzij();
+        zakladniUdaje.getUpgradePouzitiZvuk().prehraj();
+        zakladniUdaje.setAkce(true);
       }
     } );
 

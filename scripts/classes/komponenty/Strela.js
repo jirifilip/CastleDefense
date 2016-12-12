@@ -1,5 +1,5 @@
-define([], function() {
-  function Strela(Vykreslovac, ctx, velikost, smerX, smerY, x, y, rozmerPlatna) {
+define(["Zvuk"], function(Zvuk) {
+  function Strela(Vykreslovac, ctx, velikost, smerX, smerY, x, y, rozmerPlatna, typ) {
     var smerX = smerX;
     var smerY = smerY;
     var rozmerPlatna = rozmerPlatna;
@@ -7,6 +7,13 @@ define([], function() {
     var velikostStrely = velikost;
     var x = x;
     var y = y;
+    var typ = typ;
+
+    //zvuk ktery se přehraje při vytvoření
+    var src;
+    typ == "ohnivaKoule"? src = "sounds/ohnivaKoule.mp3" : src = "sounds/delo.mp3";
+    var strelbaZvuk = new Zvuk(src);
+    strelbaZvuk.prehraj();
 
     this.mimo = false;
 
@@ -17,10 +24,13 @@ define([], function() {
     this.update = function() {
       x += smerX * 5;
       y += smerY * 5;
-      vykreslovac.strela(ctx, x, y, velikostStrely, velikostStrely);
+      if (typ == "ohnivaKoule") {
+        vykreslovac.ohnivaKoule(ctx, x, y, velikostStrely * 2);
+      } else {
+        vykreslovac.strela(ctx, x, y, velikostStrely);
+      }
       if (x > rozmerPlatna || x < 0 || y > rozmerPlatna || y < 0) {
         this.mimo = true;
-        //console.log("mimo");
       }
     }
   }

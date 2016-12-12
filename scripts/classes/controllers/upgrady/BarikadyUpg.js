@@ -1,11 +1,16 @@
 define([], function() {
   function BarikadyUpg(zaklUd) {
+    this.ikonka = new Image();
+    this.ikonka.src = "images/barikadyUpg.jpg";
+
     zakladniUdaje = zaklUd;
     vykreslovac = zakladniUdaje.vykreslovac;
     ctx = zakladniUdaje.getCtx();
     trasa = zakladniUdaje.getTrasa();
     rozmer = zakladniUdaje.getRozmerJednohoGridu();
     var temp;
+
+    this.nazev = "barikady";
 
     var _vykresliPalisady = function() {
       for (i = 0; i < 4; i++) {
@@ -21,8 +26,9 @@ define([], function() {
     }
 
     this.pouzij = function() {
-      _vykresliPalisady();
-      zakladniUdaje.setBarikady(true);
+      if (zakladniUdaje.getAktualniUpgrade() == "barikady") {
+        _vykresliPalisady();
+      }
     }
   }
 

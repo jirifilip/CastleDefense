@@ -12,7 +12,7 @@ define(["Strela", "Zvuk"], function(Strela, Zvuk) {
     var strela;
     var x = x;
     var y = y;
-    var strelbaDeloZvuk = new Zvuk("sounds/delo.mp3");
+    var typ; //ohnivá koule nebo normální střela
 
     this.strely = [];
 
@@ -28,8 +28,12 @@ define(["Strela", "Zvuk"], function(Strela, Zvuk) {
         }
       }
       ctx.beginPath();
-      nabito? ctx.fillStyle = "blue" : ctx.fillStyle = "red";
-      //ctx.fillRect(x, y, rozsah * aktNabiti / MaxNabiti, rozsah/2);
+      if (nabito) {
+        zakladniUdaje.getAktualniUpgrade() == "cooldown"? ctx.fillStyle = "yellow" : ctx.fillStyle = "blue";
+      }
+      else {
+        zakladniUdaje.getAktualniUpgrade() == "cooldown"? ctx.fillStyle = "#333300" : ctx.fillStyle = "red";
+      }
       ctx.arc(x, y, rozsah/6, 0, aktNabiti / MaxNabiti * 2 * Math.PI);
       ctx.fill();
 
@@ -46,11 +50,10 @@ define(["Strela", "Zvuk"], function(Strela, Zvuk) {
     }
 
     this.vystrel = function(smerX, smerY, bezCooldownu) {
-      console.log(zakladniUdaje.getCooldownDela());
       if (nabito || bezCooldownu) {
         zapsano = false;
-        strelbaDeloZvuk.prehraj();
-        strela = new Strela (vykreslovac, ctx, velikostStrely, smerX, smerY, x, y, rozmerPlatna);
+        bezCooldownu? typ = "ohnivaKoule" : typ = "strela";
+        strela = new Strela (vykreslovac, ctx, velikostStrely, smerX, smerY, x, y, rozmerPlatna, typ);
         for (i = 0; i < this.strely.length; i++) {
           if (this.strely[i] == undefined) {
             this.strely[i] = strela;
@@ -65,7 +68,11 @@ define(["Strela", "Zvuk"], function(Strela, Zvuk) {
           aktNabiti = 0;
         }
       }
+    }
 
+    this.setAktNabiti = function() {
+      MaxNabiti = zakladniUdaje.getCooldownDela();
+      aktNabiti = MaxNabiti;
     }
   }
 

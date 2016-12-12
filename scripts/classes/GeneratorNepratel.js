@@ -122,7 +122,7 @@ define(["Nepritel"], function(Nepritel) {
           pocitadloNepr[i]++; //počítá, kolik nepřátel se už vygenerovalo
           _generujNepritele(i);
           generovaniNepr.pocitadloGenerovani[i] = 0;
-          if (!(generovaniNepr.vychCasGen - generovaniNepr.casGen >= obtiznost * 4)) {
+          if (generovaniNepr.vychCasGen[i] - generovaniNepr.casGen[i] >= obtiznost * 3) {
             generovaniNepr.casGen[i] -= 5;
           }
         }

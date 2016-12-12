@@ -1,4 +1,10 @@
-define(["GeneratorTrasy"], function (GeneratorTrasy) {
+define([
+  "GeneratorTrasy",
+   "Zvuk"
+ ], function (
+    GeneratorTrasy,
+    Zvuk
+  ) {
   function ZakladniUdaje(rozmer, id, Vykreslovac) {
     //musí být liché
     const sloupcuRadku = 11;
@@ -13,7 +19,8 @@ define(["GeneratorTrasy"], function (GeneratorTrasy) {
     var pocetZabitych = 0;
     var upgradeReady = false;
     var cooldownDela = 100;
-    var barikady = false;
+    var aktualniUpgrade = undefined;
+    var akce = false; //stisknut mezerník
 
     //vypočtení lokace hradu, výpočty jsou už upravené pro cyklus
     var zakladniSouradniceHradu = Math.round(sloupcuRadku / rozmerHraduStrana);
@@ -24,6 +31,13 @@ define(["GeneratorTrasy"], function (GeneratorTrasy) {
     //proměnné do cyklu
     var i;
     var j;
+
+    //zvuk, který se přehraje při použití upgradu
+    var upgradePouzitiZvuk = new Zvuk("sounds/upgradeUsed.mp3");
+    upgradePouzitiZvuk.setVolume(0.5);
+
+    //kontroluje, aby z děla nemohly vyjít dvě střely zároveň při použití upgradu
+    var uzJednaStrela = { existuje : false, pocitadlo : 40, puvodniHodnota : 40};
 
     //trasa a cesta nepřátel
     var trasa;
@@ -56,8 +70,15 @@ define(["GeneratorTrasy"], function (GeneratorTrasy) {
     var lokaceUpgradu = {
       x : Math.round(sloupcuRadku/2) * rozmerJednohoGridu,
       y : rozmerJednohoGridu / 4,
-      sirkaX : Math.round(sloupcuRadku/2 - 1) * rozmerJednohoGridu,
+      sirkaX : Math.round(sloupcuRadku/2 - 2) * rozmerJednohoGridu,
       sirkaY : rozmerJednohoGridu / 2,
+    }
+    //lokace GUI
+    var lokaceGUI = {
+      x: (sloupcuRadku/2) * rozmerJednohoGridu,
+      y: 0,
+      sirkaX: Math.round(sloupcuRadku/2) * rozmerJednohoGridu,
+      sirkaY : rozmerJednohoGridu,
     }
 
 
@@ -124,6 +145,12 @@ define(["GeneratorTrasy"], function (GeneratorTrasy) {
     this.getLokaceUpgradu = function() {
       return lokaceUpgradu;
     }
+    this.getLokaceGUI = function() {
+      return lokaceGUI;
+    }
+    this.getRozmerHradu = function() {
+      return rozmerHradu;
+    }
     this.getUpgradeReady = function() {
       return upgradeReady;
     }
@@ -133,8 +160,17 @@ define(["GeneratorTrasy"], function (GeneratorTrasy) {
     this.getRozmerJednohoGridu = function() {
       return rozmerJednohoGridu;
     }
-    this.getBarikady = function() {
-      return barikady;
+    this.getAktualniUpgrade = function() {
+      return aktualniUpgrade;
+    }
+    this.getAkce = function() {
+      return akce;
+    }
+    this.getUpgradePouzitiZvuk = function() {
+      return upgradePouzitiZvuk;
+    }
+    this.getUzJednaStrela = function() {
+      return uzJednaStrela;
     }
 
 
@@ -172,8 +208,15 @@ define(["GeneratorTrasy"], function (GeneratorTrasy) {
     this.setCooldownDela = function(val) {
       cooldownDela = val;
     }
-    this.setBarikady = function(val) {
-      barikady = val;
+    this.setAktualniUpgrade = function(val) {
+      aktualniUpgrade = val;
+    }
+    this.setAkce = function(val) {
+      akce = val;
+    }
+    this.setUzJednaStrela = function(existuje, pocitadlo, prepsat) {
+      uzJednaStrela.existuje = existuje;
+      prepsat? uzJednaStrela.pocitadlo = pocitadlo : uzJednaStrela.pocitadlo += pocitadlo ;
     }
 
 

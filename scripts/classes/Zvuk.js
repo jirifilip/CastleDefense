@@ -1,21 +1,23 @@
 define(["jquery"], function($) {
   function Zvuk(src) {
-    this.zvuk = document.createElement("audio");
-    this.zvuk.src = src;
+    var zvuk = document.createElement("audio");
+    zvuk.src = src;
 
-    this.zvuk.setAttribute("preload", "auto");
-    this.zvuk.setAttribute("controls", "none");
-    this.zvuk.style.display = "none";
-    this.zvuk.volume = 0.05;
+    zvuk.setAttribute("preload", "auto");
+    zvuk.setAttribute("controls", "none");
+    zvuk.style.display = "none";
+    zvuk.volume = 0.05;
 
-    document.body.appendChild(this.zvuk);
+    document.body.appendChild(zvuk);
 
     this.stop = function() {
-      this.zvuk.pause();
+      zvuk.pause();
     }
-
     this.prehraj = function(){
-        this.zvuk.play();
+      zvuk.play();
+    }
+    this.setVolume = function(val) {
+      zvuk.volume = val;
     }
 
   }

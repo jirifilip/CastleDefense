@@ -12,8 +12,17 @@ define(["Zvuk"], function(Zvuk) {
     var strela = new Image();
     strela.src = "images/strela.jpg";
 
+    var ohnivaKoule = new Image();
+    ohnivaKoule.src = "images/ohnivaKoule.jpg";
+
     var cesta = new Image();
     cesta.src = "images/cesta.jpg";
+
+    var otaznik = new Image();
+    otaznik.src = "images/otaznik.jpg"
+
+    var gui = new Image();
+    gui.src = "images/gui.jpg";
 
     var _nactiNepratele = function(cil, druh) {
       for (i = 0; i < 4; i++) {
@@ -50,6 +59,9 @@ define(["Zvuk"], function(Zvuk) {
     this.strela = function(ctx, x, y, rozmer) {
       ctx.drawImage(strela, x, y, rozmer, rozmer);
     };
+    this.ohnivaKoule = function(ctx, x, y, rozmer) {
+      ctx.drawImage(ohnivaKoule, x, y, rozmer, rozmer);
+    }
     this.nepritel = function(ctx, x, y, rozmer, druh, animace) {
       ctx.drawImage(nepritel[druh - 1][animace], x, y, rozmer, rozmer);
     };
@@ -58,6 +70,14 @@ define(["Zvuk"], function(Zvuk) {
     };
     this.barikada = function(ctx, x, y, rozmer, i) {
       ctx.drawImage(barikada[i], x, y, rozmer, rozmer);
+    }
+    this.upgrade = function(ctx, x, y, rozmer, obrazek) {
+      if (obrazek == undefined)
+        obrazek = otaznik;
+      ctx.drawImage(obrazek, x, y, rozmer, rozmer);
+    }
+    this.gui = function(ctx, x, y, rozmerX, rozmerY) {
+      ctx.drawImage(gui, x, y, rozmerX, rozmerY);
     }
 
 
