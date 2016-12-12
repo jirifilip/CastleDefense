@@ -5,7 +5,7 @@ define([], function() {
     var zakladniUdaje = zaklUd;
 
     this.ikonka = new Image();
-    this.ikonka.src = "images/VsechnySmeryUpg.jpg";
+    this.ikonka.src = "images/vsechnySmeryUpg.jpg";
 
     this.nazev = "vsechnySmery";
 
