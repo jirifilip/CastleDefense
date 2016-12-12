@@ -24,7 +24,8 @@ define([
 
     var i = obrz;
     var obrazek = obrz;
-
+    //proměnná se stará o to, jak se má obrázek otáčet
+    var aktualniRotace = obrz;
 
     var spawnpoint = zakladniUdaje.getSpawnpoint()[i];
     var vykreslovac = zakladniUdaje.getVykreslovac();
@@ -59,6 +60,24 @@ define([
     var _hybejSe = function() {
       if (pohyb.aktPole < delkaSmeru) {
         pohyb.pocitadlo++;
+        if (smer[pohyb.aktPole].x > 0) {
+          aktualniRotace = 2;
+        }
+        else if (smer[pohyb.aktPole].x < 0) {
+          aktualniRotace = 1;
+        }
+        else if (smer[pohyb.aktPole].y > 0) {
+          if (i == 1 || i == 2)
+            aktualniRotace = 3
+          else
+            aktualniRotace = 0;
+        }
+        else {
+          if (i == 1 || i == 2)
+            aktualniRotace = 0
+          else
+            aktualniRotace = 3;
+        }
         x += smer[pohyb.aktPole].x/rychlostPohybu;
         y += znamenko * smer[pohyb.aktPole].y/rychlostPohybu;
         if (pohyb.pocitadlo >= rychlostPohybu) {
@@ -83,7 +102,7 @@ define([
     this.update = function () {
       _hybejSe();
        _vykresliZdravi();
-      vykreslovac.nepritel(ctx, x, y, rozmer, druh, obrazek);
+      vykreslovac.nepritel(ctx, x, y, rozmer, druh, aktualniRotace);
       if (aktZdravi <= 0) {
         zakladniUdaje.incPocetZabitych();
         pohyb.konec = true;

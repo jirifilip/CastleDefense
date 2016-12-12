@@ -32,7 +32,7 @@ define([], function() {
       }
     }
 
-    var _zapisPohyb = function (krok, aktSour, predchoziSmer, smer, vynulovat) {
+    var _zapisPohyb = function (krok, aktSour, predchoziSmer, smer, vynulovat, konec) {
       if (vynulovat)
         predchoziSmer.pocitadlo = 0;
       predchoziSmer.pocitadlo = 0;
@@ -53,7 +53,12 @@ define([], function() {
       var dalsiSmer = "smerSl";
       var zacatekPocitadlo = 1;
       while(_existujeDalsi(udaje, aktSour)) {
-        grid[aktSour.Sl][aktSour.Rd] = udaje.jmeno;
+        if (zacatekPocitadlo == 1) {
+          grid[aktSour.Sl][aktSour.Rd] = udaje.jmeno + "zacat";
+        }
+        else {
+          grid[aktSour.Sl][aktSour.Rd] = udaje.jmeno;
+        }
         //VRdlosování, jestli se půjde směrem Sl nebo směrem Rd
         if (zacatekPocitadlo > 0) {
           if (udaje.priorita == "smerSl") {
@@ -85,7 +90,8 @@ define([], function() {
           }
         }
       }
-      grid[aktSour.Sl][aktSour.Rd] = udaje.jmeno;
+      grid[aktSour.Sl][aktSour.Rd] = udaje.jmeno + "konec";
+      console.log(grid[aktSour.Sl][aktSour.Rd]);
     }
 
     this.generuj = function() {
@@ -96,24 +102,49 @@ define([], function() {
       poc = {"tr1" : 0, "tr2" : 0, "tr3" : 0, "tr4" : 0};
       for (i = 0; i < sloupcuRadku; i++) {
         for (j = 0; j < sloupcuRadku; j++) {
-          switch(grid[i][j]) {
+          s = grid[i][j].substring(0, 6);
+          switch(s) {
             case "trasa1":
-              trasa[0][poc.tr1] = {"x" : i * rozmerJednohoGridu, "y" : j * rozmerJednohoGridu, "konec" : false};
+              if (grid[i][j].substring(6, 11) == "konec") {
+                konec = true;
+              }
+              else {
+                konec = false;
+              }
+              trasa[0][poc.tr1] = {"x" : i * rozmerJednohoGridu, "y" : j * rozmerJednohoGridu, "konec" : konec};
               poc.tr1++
               break;
 
             case "trasa2":
-              trasa[1][poc.tr2] = {"x" : i * rozmerJednohoGridu, "y" : j * rozmerJednohoGridu, "konec" : false};
+              if (grid[i][j].substring(6, 11) == "konec") {
+                konec = true;
+              }
+              else {
+                konec = false;
+              }
+              trasa[1][poc.tr2] = {"x" : i * rozmerJednohoGridu, "y" : j * rozmerJednohoGridu, "konec" : konec};
               poc.tr2++
               break;
 
             case "trasa3":
-              trasa[2][poc.tr3] = {"x" : i * rozmerJednohoGridu, "y" : j * rozmerJednohoGridu, "konec" : false};
+              if (grid[i][j].substring(6, 11) == "konec") {
+                konec = true;
+              }
+              else {
+                konec = false;
+              }
+              trasa[2][poc.tr3] = {"x" : i * rozmerJednohoGridu, "y" : j * rozmerJednohoGridu, "konec" : konec};
               poc.tr3++
               break;
 
             case "trasa4":
-              trasa[3][poc.tr4] = {"x" : i * rozmerJednohoGridu, "y" : j * rozmerJednohoGridu, "konec" : false};
+              if (grid[i][j].substring(6, 11) == "konec") {
+                konec = true;
+              }
+              else {
+                konec = false;
+              }
+              trasa[3][poc.tr4] = {"x" : i * rozmerJednohoGridu, "y" : j * rozmerJednohoGridu, "konec" : konec};
               poc.tr4++
               break;
           }
@@ -127,6 +158,14 @@ define([], function() {
           spawnpoint[i] = trasa[i][trasa[i].length - 1];
         }
       }
+
+      for (i = 0; i < trasa.length; i++) {
+        for (j = 0; j < trasa[i].length; j++) {
+          if (trasa[i][j].konec == true)
+            spawnpoint[i] = trasa[i][j];
+        }
+      }
+
       zakladniUdaje.setTrasa(trasa);
       zakladniUdaje.setSpawnpoint(spawnpoint);
     }();
