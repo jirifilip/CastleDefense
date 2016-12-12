@@ -6,16 +6,31 @@ define([
     Zvuk
   ) {
   function ZakladniUdaje(rozmer, id, Vykreslovac) {
+    //tento objekt se chová jako prostředník mezi ostatními objekty a předává jim údaje
+    //obsahuje i některé výpočty pro lokaci ostatních objektů
+
+
     //musí být liché
     const sloupcuRadku = 11;
     const rozmerHraduStrana = 3;
 
-    var rozmer = rozmer;
+    var rozmer
+    if (rozmer > 640) {
+      rozmer = 640;
+    }
+    else {
+      rozmer = rozmer;
+    }
+
     var id = id;
+
+    //vypočítáme šírku jednoho "čtverečku"
     var rozmerJednohoGridu = rozmer / sloupcuRadku;
+
     var ctx;
 
     var pauza = false;
+    var konecHry = false;
     var pocetZabitych = 0;
     var upgradeReady = false;
     var cooldownDela = 100;
@@ -25,12 +40,15 @@ define([
     //vypočtení lokace hradu, výpočty jsou už upravené pro cyklus
     var zakladniSouradniceHradu = Math.round(sloupcuRadku / rozmerHraduStrana);
 
+    //pro vykreslení hradu
     const lokaceHradu = zakladniSouradniceHradu * rozmerJednohoGridu;
     const rozmerHradu = rozmerHraduStrana * rozmerJednohoGridu;
 
     //proměnné do cyklu
     var i;
     var j;
+
+    var score = 0;
 
     //zvuk, který se přehraje při použití upgradu
     var upgradePouzitiZvuk = new Zvuk("sounds/upgradeUsed.mp3");
@@ -70,7 +88,7 @@ define([
     var lokaceUpgradu = {
       x : Math.round(sloupcuRadku/2) * rozmerJednohoGridu,
       y : rozmerJednohoGridu / 4,
-      sirkaX : Math.round(sloupcuRadku/2 - 2) * rozmerJednohoGridu,
+      sirkaX : Math.round(sloupcuRadku/2 - 3) * rozmerJednohoGridu,
       sirkaY : rozmerJednohoGridu / 2,
     }
     //lokace GUI
@@ -79,6 +97,11 @@ define([
       y: 0,
       sirkaX: Math.round(sloupcuRadku/2) * rozmerJednohoGridu,
       sirkaY : rozmerJednohoGridu,
+    }
+    //lokace skóre
+    var lokaceScore = {
+      x: Math.round(sloupcuRadku - 1) * rozmerJednohoGridu,
+      y : rozmerJednohoGridu / 1.5,
     }
 
 
@@ -148,6 +171,9 @@ define([
     this.getLokaceGUI = function() {
       return lokaceGUI;
     }
+    this.getLokaceScore = function() {
+      return lokaceScore;
+    }
     this.getRozmerHradu = function() {
       return rozmerHradu;
     }
@@ -172,6 +198,9 @@ define([
     this.getUzJednaStrela = function() {
       return uzJednaStrela;
     }
+    this.getScore = function() {
+      return score;
+    }
 
 
     //settery
@@ -194,7 +223,12 @@ define([
       delo = val;
     }
     this.setPauza = function() {
-      pauza = !pauza;
+      if (!konecHry) {
+        pauza = !pauza;
+      }
+    }
+    this.setKonecHry = function() {
+      konecHry = true;
     }
     this.incPocetZabitych = function(val) {
       pocetZabitych++
@@ -214,9 +248,13 @@ define([
     this.setAkce = function(val) {
       akce = val;
     }
+    //hlídá, aby se nevypustili dvě střely najednou, když se spustí upgrade
     this.setUzJednaStrela = function(existuje, pocitadlo, prepsat) {
       uzJednaStrela.existuje = existuje;
       prepsat? uzJednaStrela.pocitadlo = pocitadlo : uzJednaStrela.pocitadlo += pocitadlo ;
+    }
+    this.incScore = function() {
+      score++;
     }
 
 

@@ -1,5 +1,7 @@
 define([], function() {
   function BarikadyUpg(zaklUd) {
+    //upgrade - vytvoření barikád
+
     this.ikonka = new Image();
     this.ikonka.src = "images/barikadyUpg.jpg";
 

@@ -1,5 +1,7 @@
 define([], function() {
   function VsechnySmeryUpg(zaklUd) {
+    //upgrade - vystřelení do všech směrů naráz
+
     var zakladniUdaje = zaklUd;
 
     this.ikonka = new Image();

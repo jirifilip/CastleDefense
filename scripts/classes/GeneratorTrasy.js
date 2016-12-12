@@ -15,14 +15,15 @@ define([], function() {
     var zaklSourMensi = Math.floor(sloupcuRadku / 2) - 1; //4
     var zaklSourVetsi = zaklSourMensi++; //5
 
-
+    //definování tras a směrů, jakými mají při generování trasy jít
     var udaje = [
-     { "jmeno" : "trasa1", "priorita" : "smerRd", "krokRd" : -1, "krokSl" : -1, "x" : zaklSourVetsi + 1, "y" : zaklSourMensi - 2},
-     { "jmeno" : "trasa2", "priorita" : "smerSl", "krokRd" : 1, "krokSl" : -1, "x" : zaklSourVetsi + 3, "y" : zaklSourVetsi + 1 },
-     { "jmeno" : "trasa3", "priorita" : "smerSl", "krokRd" : -1, "krokSl" : 1, "x" : zaklSourMensi - 2, "y" : zaklSourVetsi + 1 },
-     { "jmeno" : "trasa4", "priorita" : "smerRd", "krokRd" : 1, "krokSl" : 1, "x" : zaklSourVetsi + 1, "y" : zaklSourVetsi + 3},
+     { jmeno : "trasa1", priorita : "smerRd", krokRd : -1, krokSl : -1, x : zaklSourVetsi + 1, y : zaklSourMensi - 2},
+     { jmeno : "trasa2", priorita : "smerSl", krokRd : 1, krokSl : -1, x : zaklSourVetsi + 3, y : zaklSourVetsi + 1 },
+     { jmeno : "trasa3", priorita : "smerSl", krokRd : -1, krokSl : 1, x : zaklSourMensi - 2, y : zaklSourVetsi + 1 },
+     { jmeno : "trasa4", priorita : "smerRd", krokRd : 1, krokSl : 1, x : zaklSourVetsi + 1, y : zaklSourVetsi + 3},
    ];
 
+    //funkce testuje, jestli při pokračování trasou existuje další pole, nebo už jsme na konci herní plochy
     var  _existujeDalsi = function (udaje, aktSour) {
       if (aktSour.Sl > 0 && aktSour.Rd > 0 && aktSour.Sl < 10 && aktSour.Rd < 10) {
         return true;
@@ -32,6 +33,7 @@ define([], function() {
       }
     }
 
+    //funkce zapíše aktuální souřadnice do trasy
     var _zapisPohyb = function (krok, aktSour, predchoziSmer, smer, vynulovat, konec) {
       if (vynulovat)
         predchoziSmer.pocitadlo = 0;
@@ -45,11 +47,18 @@ define([], function() {
       predchoziSmer.pocitadlo++;
     }
 
+    //funkce, která generuje celou trasu
+    //využívá údaje o směru, které se definovali na začátku
+    //když je směr např. +1 a +1, trasa se generuje směrem dolů a doprava
+    // -1 a -1 se zase generuje nahoru a doleva
+    //začíná se vždy v bráně
+    //máme počítadlo, které nám zajišťuje, aby se trasa "ohnula" nejméně po dvou krocích
+    //priorita směru udává, kterým směrem se má vydat nejdříve. U trasy vpravo např. chceme, aby se generovala dříve doprava než nahoru
     var _generujTrasu = function (udaje, grid) {
       var udaje = udaje;
-      var krok = {"Sl" : udaje.krokRd, "Rd" : udaje.krokSl};
-      var predchoziSmer = {"smer" : "", "pocitadlo" : 0};
-      var aktSour = {"Sl" : udaje.x, "Rd" : udaje.y};
+      var krok = {Sl : udaje.krokRd, Rd : udaje.krokSl};
+      var predchoziSmer = {smer : "", pocitadlo : 0};
+      var aktSour = {Sl : udaje.x, Rd : udaje.y};
       var dalsiSmer = "smerSl";
       var zacatekPocitadlo = 1;
       while(_existujeDalsi(udaje, aktSour)) {
@@ -90,10 +99,12 @@ define([], function() {
           }
         }
       }
-      grid[aktSour.Sl][aktSour.Rd] = udaje.jmeno + "konec";
-      console.log(grid[aktSour.Sl][aktSour.Rd]);
+      grid[aktSour.Sl][aktSour.Rd] = udaje.jmeno + "konec"; //hlídá nám, kde je konec
     }
 
+    //tato funkce vezme souřadnice gridu a převede je na "opravdové" souřadnice
+    //např. místo [2, 3] budeme mít [2 * 58, 3 * 58]
+    //také zapíše, kde je konec trasy a tedy i spawnpoint nepřátel
     this.generuj = function() {
       for (i = 0; i < 4; i++) {
         _generujTrasu(udaje[i], grid);
@@ -111,7 +122,7 @@ define([], function() {
               else {
                 konec = false;
               }
-              trasa[0][poc.tr1] = {"x" : i * rozmerJednohoGridu, "y" : j * rozmerJednohoGridu, "konec" : konec};
+              trasa[0][poc.tr1] = {x : i * rozmerJednohoGridu, y : j * rozmerJednohoGridu, konec : konec};
               poc.tr1++
               break;
 
@@ -122,7 +133,7 @@ define([], function() {
               else {
                 konec = false;
               }
-              trasa[1][poc.tr2] = {"x" : i * rozmerJednohoGridu, "y" : j * rozmerJednohoGridu, "konec" : konec};
+              trasa[1][poc.tr2] = {x : i * rozmerJednohoGridu, y : j * rozmerJednohoGridu, konec : konec};
               poc.tr2++
               break;
 
@@ -133,7 +144,7 @@ define([], function() {
               else {
                 konec = false;
               }
-              trasa[2][poc.tr3] = {"x" : i * rozmerJednohoGridu, "y" : j * rozmerJednohoGridu, "konec" : konec};
+              trasa[2][poc.tr3] = {x : i * rozmerJednohoGridu, y : j * rozmerJednohoGridu, konec : konec};
               poc.tr3++
               break;
 
@@ -144,21 +155,12 @@ define([], function() {
               else {
                 konec = false;
               }
-              trasa[3][poc.tr4] = {"x" : i * rozmerJednohoGridu, "y" : j * rozmerJednohoGridu, "konec" : konec};
+              trasa[3][poc.tr4] = {x : i * rozmerJednohoGridu, y : j * rozmerJednohoGridu, konec : konec};
               poc.tr4++
               break;
           }
         }
       }
-      for (i = 0; i < trasa.length; i++) {
-        if (i == 0 || i == 2) {
-          spawnpoint[i] = trasa[i][0];
-        }
-        else {
-          spawnpoint[i] = trasa[i][trasa[i].length - 1];
-        }
-      }
-
       for (i = 0; i < trasa.length; i++) {
         for (j = 0; j < trasa[i].length; j++) {
           if (trasa[i][j].konec == true)
@@ -166,6 +168,7 @@ define([], function() {
         }
       }
 
+      //předáme vypočtené údaje prostředníkovi
       zakladniUdaje.setTrasa(trasa);
       zakladniUdaje.setSpawnpoint(spawnpoint);
     }();

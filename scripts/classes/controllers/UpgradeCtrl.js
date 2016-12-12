@@ -10,6 +10,8 @@ define([
   Zvuk
 ) {
   function UpgradeCtrl(zaklUd) {
+    //tento objekt se stará o aktivování upgradů
+
     var zakladniUdaje = zaklUd;
     var vykreslovac = zakladniUdaje.vykreslovac;
     var rozmerIkonky = zakladniUdaje.getRozmerJednohoGridu() / 2;
@@ -25,7 +27,7 @@ define([
     var lokGUI = zakladniUdaje.getLokaceGUI();
     cas = {casKpouziti : 200, aktualniCas : 200};
 
-    const zabitDoUpg = 2;
+    const zabitDoUpg = 4;
 
     var uzJednaStrela;
 

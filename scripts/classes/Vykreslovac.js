@@ -1,5 +1,7 @@
 define(["Zvuk"], function(Zvuk) {
   function Vykreslovac() {
+    //objekt mohou zavolat ostatní objekty. Stará se o vykreslování obrázků
+
     var uvodniObrazovka = new Image();
     uvodniObrazovka.src = "images/uvodni_obrazovka.jpg"
 

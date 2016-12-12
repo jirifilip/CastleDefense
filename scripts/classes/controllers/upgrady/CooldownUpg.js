@@ -1,5 +1,7 @@
 define([], function() {
   function CooldownUpg(zaklUd) {
+    //upgrade - zmenšení cooldownu
+
     var zakladniUdaje = zaklUd;
     const puvodni = 100;
     const nyni = 50;

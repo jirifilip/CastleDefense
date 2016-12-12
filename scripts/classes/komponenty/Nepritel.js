@@ -95,6 +95,11 @@ define([
           pohyb.aktPole--;
           pohyb.konec = true;
           zakladniUdaje.setPauza();
+          zakladniUdaje.setKonecHry();
+          alert("Prohrál/a jsi! Celkem jsi dosáhl/a skóre " + zakladniUdaje.getScore() + "\n(Tento alert je zde jen dočasně. Je spuštěna funkce 'gamee.gameOver()').");
+
+          //konec hry
+          gamee.gameOver();
         }
       }
     }
@@ -107,6 +112,7 @@ define([
         zakladniUdaje.incPocetZabitych();
         pohyb.konec = true;
         skoreZvuk.prehraj();
+        zakladniUdaje.incScore();
       }
     }
 
